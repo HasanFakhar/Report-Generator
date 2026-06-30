@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import StatementOfAccount from "./statement_of_account";
+import StatementOfAccount from "./reports/statement_of_account";
 
 
 // ─── Styles ───────────────────────────────────────────────────────────────────
@@ -319,28 +319,6 @@ export default function StatementOfAccountPage() {
       {/* ── Page body ────────────────────────────────────────────────────── */}
       <div style={S.body}>
 
-        {/* Agreement meta info card */}
-        {/* {selectedAgreement && (
-          <div style={S.infoCard}>
-            {[
-              ["Unit", selectedAgreement.unitName],
-              ["Consumer", selectedAgreement.consumerName],
-              ["Agreement No", selectedAgreement.serviceAgreementNumber],
-              ["Agreement Key", selectedAgreement.serviceAgreementKey],
-              ["Contract Capacity", `${selectedAgreement.contractCapacity} kWh`],
-              ["Bill Start Day", selectedAgreement.billStartDay],
-              ["Billing Days", selectedAgreement.noOfBillingDays],
-              ["Start Date", formatDate(selectedAgreement.startTime)],
-              ["End Date", formatDate(selectedAgreement.stopTime)],
-              ["Last Modified By", selectedAgreement.lastModifiedBy],
-            ].map(([label, value]) => (
-              <div key={label} style={S.infoItem}>
-                <span style={S.infoItemLabel}>{label}</span>
-                <span style={S.infoItemValue}>{value ?? "—"}</span>
-              </div>
-            ))}
-          </div>
-        )} */}
 
         {/* States: placeholder / loading / error / report */}
         {!selectedKey && (
