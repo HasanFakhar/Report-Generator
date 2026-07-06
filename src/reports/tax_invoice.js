@@ -23,100 +23,147 @@ const SAMPLE_DETAIL = {
     "data": [
         {
             "SrNo": 1,
-            "MeterID": null,
-            "MeterSerialNumber": null,
-            "CommercialDataTagID": 27,
-            "Description": "Security Deposit\nمبلغ التأمين",
-            "PrevReading": null,
+            "MeterID": 487,
+            "MeterSerialNumber": "69294862",
+            "CommercialDataTagID": 11,
+            "Description": "Utility Consumption(Cooled energy) Rate(SerialNumber:69294862)\n(69294862: استهلاك المرافق (الطاقة المبردة) (الرقم التسلسلي",
+            "PrevReading": 74309,
             "PrevReadingUOM": "kWh",
-            "CurrReading": null,
+            "CurrReading": 53092,
             "CurrReadingUOM": "kWh",
-            "Qty": 1,
+            "Qty": 999978783,
             "QtyUOM": "kWh",
-            "Rate": 2000,
-            "RateUOM": "AED",
-            "TaxableAmount": 2000,
+            "Rate": 0.1592,
+            "RateUOM": "AED/kWh",
+            "TaxableAmount": 159196622.25,
             "TaxableAmountUOM": "AED",
-            "VAT": 0,
+            "VAT": 7959831.11,
             "VATUOM": "AED",
             "VATPercetage": 5,
             "VATPercetageUOM": "%",
-            "TotalAmount": 2000,
+            "TotalAmount": 167156453.36,
             "TotalAmountUOM": "AED",
             "lblPreviousBalance": "Previous Balance (AED)",
             "lblAdjustmentAmount": "Adjustment Amount (AED)",
-            "PreviousBalance": 134.3,
+            "PreviousBalance": 768.17,
             "PreviousBalanceUOM": "AED",
             "lblTotalAmountPayableWithinDueDate": "Total Amount Payable Within Due Date (AED)",
-            "TotalAmountPayableWithinDueDate": 2252,
+            "TotalAmountPayableWithinDueDate": 189521886.07,
             "TotalAmountPayableWithinDueDateUOM": "AED",
             "lblAdvancePayment": "Wallet Balance / Advance Payment (AED)",
             "AdvancePayment": 0,
             "AdvancePaymentUOM": "AED",
-            "IsAdvancePayment": false,
+            "IsAdvancePayment": true,
             "AdjustmentAmount": 0,
             "AdjustmentAmountUOM": "AED",
             "IsAdjustmentAmount": true,
-            "SumTaxableAmount": 2240,
+            "SumTaxableAmount": 180496302.77,
             "SumTaxableAmountUOM": "AED",
-            "SumVAT": 12,
+            "SumVAT": 9024815.13,
             "SumVATUOM": "AED",
-            "SumTotalAmount": 2252,
+            "SumTotalAmount": 189521117.9,
             "SumTotalAmountUOM": "AED",
-            "TRhCorrectionFactor": 0.2844,
+            "TRhCorrectionFactor": 1,
             "RTHMeterDataValueUOM": "TRh",
             "EstimatedFlag": null,
-            "IsInitialBill": true
+            "IsInitialBill": false
         },
         {
             "SrNo": 2,
             "MeterID": null,
             "MeterSerialNumber": null,
-            "CommercialDataTagID": 31,
-            "Description": "Activation Fee / Registration Fee\nرسوم التفعيل",
+            "CommercialDataTagID": 64,
+            "Description": "Fuel Surcharge Rate\nرسوم الوقود الإضافية",
             "PrevReading": null,
             "PrevReadingUOM": "kWh",
             "CurrReading": null,
             "CurrReadingUOM": "kWh",
-            "Qty": 1,
+            "Qty": 999978783,
             "QtyUOM": "kWh",
-            "Rate": 200,
+            "Rate": 0.0213,
             "RateUOM": "AED",
-            "TaxableAmount": 200,
+            "TaxableAmount": 21299548.08,
             "TaxableAmountUOM": "AED",
-            "VAT": 10,
+            "VAT": 1064977.4,
             "VATUOM": "AED",
             "VATPercetage": 5,
             "VATPercetageUOM": "%",
-            "TotalAmount": 210,
+            "TotalAmount": 22364525.48,
             "TotalAmountUOM": "AED",
             "lblPreviousBalance": "Previous Balance (AED)",
             "lblAdjustmentAmount": "Adjustment Amount (AED)",
-            "PreviousBalance": 134.3,
+            "PreviousBalance": 768.17,
             "PreviousBalanceUOM": "AED",
             "lblTotalAmountPayableWithinDueDate": "Total Amount Payable Within Due Date (AED)",
-            "TotalAmountPayableWithinDueDate": 2252,
+            "TotalAmountPayableWithinDueDate": 189521886.07,
             "TotalAmountPayableWithinDueDateUOM": "AED",
             "lblAdvancePayment": "Wallet Balance / Advance Payment (AED)",
             "AdvancePayment": 0,
             "AdvancePaymentUOM": "AED",
-            "IsAdvancePayment": false,
+            "IsAdvancePayment": true,
             "AdjustmentAmount": 0,
             "AdjustmentAmountUOM": "AED",
             "IsAdjustmentAmount": true,
-            "SumTaxableAmount": 2240,
+            "SumTaxableAmount": 180496302.77,
             "SumTaxableAmountUOM": "AED",
-            "SumVAT": 12,
+            "SumVAT": 9024815.13,
             "SumVATUOM": "AED",
-            "SumTotalAmount": 2252,
+            "SumTotalAmount": 189521117.9,
             "SumTotalAmountUOM": "AED",
-            "TRhCorrectionFactor": 0.2844,
+            "TRhCorrectionFactor": 1,
             "RTHMeterDataValueUOM": "TRh",
             "EstimatedFlag": null,
-            "IsInitialBill": true
+            "IsInitialBill": false
         },
         {
             "SrNo": 3,
+            "MeterID": null,
+            "MeterSerialNumber": null,
+            "CommercialDataTagID": 53,
+            "Description": "Contract Capacity \nرسوم السعة",
+            "PrevReading": null,
+            "PrevReadingUOM": "kWh",
+            "CurrReading": null,
+            "CurrReadingUOM": "kWh",
+            "Qty": 90.7,
+            "QtyUOM": "TR",
+            "Rate": 1.01916,
+            "RateUOM": "AED",
+            "TaxableAmount": 92.44,
+            "TaxableAmountUOM": "AED",
+            "VAT": 4.62,
+            "VATUOM": "AED",
+            "VATPercetage": 5,
+            "VATPercetageUOM": "%",
+            "TotalAmount": 97.06,
+            "TotalAmountUOM": "AED",
+            "lblPreviousBalance": "Previous Balance (AED)",
+            "lblAdjustmentAmount": "Adjustment Amount (AED)",
+            "PreviousBalance": 768.17,
+            "PreviousBalanceUOM": "AED",
+            "lblTotalAmountPayableWithinDueDate": "Total Amount Payable Within Due Date (AED)",
+            "TotalAmountPayableWithinDueDate": 189521886.07,
+            "TotalAmountPayableWithinDueDateUOM": "AED",
+            "lblAdvancePayment": "Wallet Balance / Advance Payment (AED)",
+            "AdvancePayment": 0,
+            "AdvancePaymentUOM": "AED",
+            "IsAdvancePayment": true,
+            "AdjustmentAmount": 0,
+            "AdjustmentAmountUOM": "AED",
+            "IsAdjustmentAmount": true,
+            "SumTaxableAmount": 180496302.77,
+            "SumTaxableAmountUOM": "AED",
+            "SumVAT": 9024815.13,
+            "SumVATUOM": "AED",
+            "SumTotalAmount": 189521117.9,
+            "SumTotalAmountUOM": "AED",
+            "TRhCorrectionFactor": 1,
+            "RTHMeterDataValueUOM": "TRh",
+            "EstimatedFlag": null,
+            "IsInitialBill": false
+        },
+        {
+            "SrNo": 4,
             "MeterID": null,
             "MeterSerialNumber": null,
             "CommercialDataTagID": 13,
@@ -139,28 +186,28 @@ const SAMPLE_DETAIL = {
             "TotalAmountUOM": "AED",
             "lblPreviousBalance": "Previous Balance (AED)",
             "lblAdjustmentAmount": "Adjustment Amount (AED)",
-            "PreviousBalance": 134.3,
+            "PreviousBalance": 768.17,
             "PreviousBalanceUOM": "AED",
             "lblTotalAmountPayableWithinDueDate": "Total Amount Payable Within Due Date (AED)",
-            "TotalAmountPayableWithinDueDate": 2252,
+            "TotalAmountPayableWithinDueDate": 189521886.07,
             "TotalAmountPayableWithinDueDateUOM": "AED",
             "lblAdvancePayment": "Wallet Balance / Advance Payment (AED)",
             "AdvancePayment": 0,
             "AdvancePaymentUOM": "AED",
-            "IsAdvancePayment": false,
+            "IsAdvancePayment": true,
             "AdjustmentAmount": 0,
             "AdjustmentAmountUOM": "AED",
             "IsAdjustmentAmount": true,
-            "SumTaxableAmount": 2240,
+            "SumTaxableAmount": 180496302.77,
             "SumTaxableAmountUOM": "AED",
-            "SumVAT": 12,
+            "SumVAT": 9024815.13,
             "SumVATUOM": "AED",
-            "SumTotalAmount": 2252,
+            "SumTotalAmount": 189521117.9,
             "SumTotalAmountUOM": "AED",
-            "TRhCorrectionFactor": 0.2844,
+            "TRhCorrectionFactor": 1,
             "RTHMeterDataValueUOM": "TRh",
             "EstimatedFlag": null,
-            "IsInitialBill": true
+            "IsInitialBill": false
         }
     ],
     "labels": {
@@ -191,7 +238,7 @@ const SAMPLE_DETAIL = {
         "Description": "Description\nالبيان",
         "KeepDoorsWindowsClosed": "Keep doors and windows closed:\nإبقاء الأبواب والنوافذ مغلقة",
         "Note": "Note: A Late Fee will be applied to unpaid accounts after the invoice Due Date\nملاحظة: سيتم تطبيق غرامة تأخير على الحسابات غير المسددة بعد تاريخ استحقاق الفاتورة",
-        "Rate": "Rate (AED)\nسعر الوحدة",
+        "Rate": "Rate (AED/kWh)\nسعر الوحدة",
         "SetThermostatTo20CORLower": "Set thermostat to 20°C or lower:\nضبط منظم الحرارة على 20°م أو أقل",
         "27_SecurityDeposit": "مبلغ التأمين",
         "25_PreviousBalance": "الرصيد السابق",
@@ -210,6 +257,16 @@ const SAMPLE_DETAIL = {
     }
 }
 
+// Sample consumption data — shape matches what the consumption API returns:
+// [{ Year, Month, MonthName, ConsumptionValue, MeterTagName, UOM }, ...]
+const SAMPLE_CONSUMPTION = [
+    { Year: 2026, Month: 3, MonthName: "Mar", ConsumptionValue: 850.72, MeterTagName: "Consumption", UOM: "kWh" },
+    { Year: 2026, Month: 4, MonthName: "Apr", ConsumptionValue: 823.28, MeterTagName: "Consumption", UOM: "kWh" },
+    { Year: 2026, Month: 5, MonthName: "May", ConsumptionValue: 999, MeterTagName: "Consumption", UOM: "kWh" },
+    { Year: 2026, Month: 6, MonthName: "June", ConsumptionValue: 0, MeterTagName: "Consumption", UOM: "kWh" },
+
+];
+
 const BANK_DETAILS = [
     ["Account Title", "LYNX TECHNICAL SERVICES L.L.C"],
     ["Account Number", "19101139550"],
@@ -227,6 +284,162 @@ const arLine = (t) => {
 }; const fmtMoney = (v) => (v === null || v === undefined) ? "" : Number(v).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const fmtDate = (v) => { if (!v) return ""; const d = new Date(v); return isNaN(d) ? v : d.toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", year: "numeric" }); };
 
+// Draws a simple line chart for consumption history directly with jsPDF
+// primitives (lines/circles/text) — no image conversion needed, so it stays
+// crisp at any zoom level. Returns the y-coordinate just below the chart.
+function drawConsumptionChart(doc, data, x, y, width, height) {
+    if (!Array.isArray(data) || data.length === 0) return y;
+
+    // Increased left and bottom padding for axis labels
+    const padding = { top: 6, right: 8, bottom: 12, left: 15 };
+
+    const chartW = width - padding.left - padding.right;
+    const chartH = height - padding.top - padding.bottom;
+    const plotX = x + padding.left;
+    const plotY = y + padding.top;
+
+    const values = data.map((d) => Number(d.ConsumptionValue) || 0);
+    const maxV = Math.max(...values, 1);
+    const minV = Math.min(0, ...values);
+    const range = (maxV - minV) || 1;
+
+    // =========================
+    // Outer Border
+    // =========================
+    doc.setDrawColor(0, 0, 0);
+    doc.setLineWidth(0.2);
+    doc.rect(x, y, width, height);
+
+    // =========================
+    // Horizontal Gridlines + Y Labels
+    // =========================
+    const gridLines = 4;
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(6.5);
+    doc.setTextColor(90, 90, 90);
+
+    for (let i = 0; i <= gridLines; i++) {
+        const gy = plotY + chartH - (chartH * i) / gridLines;
+        const val = minV + (range * i) / gridLines;
+
+        // Light horizontal gridline
+        doc.setDrawColor(224, 224, 224);
+        doc.setLineWidth(0.15);
+        doc.line(plotX, gy, plotX + chartW, gy);
+
+        // Y-axis values
+        doc.text(
+            Number(val).toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+            }),
+            x + 2,
+            gy + 1.4
+        );
+    }
+
+    // =========================
+    // Bold Axes
+    // =========================
+    doc.setDrawColor(0, 0, 0);
+    doc.setLineWidth(0.3);
+
+    // Y-axis
+    doc.line(plotX, plotY, plotX, plotY + chartH);
+
+    // X-axis
+    doc.line(plotX, plotY + chartH, plotX + chartW, plotY + chartH);
+
+    // =========================
+    // Data Points
+    // =========================
+    const n = data.length;
+
+    const points = data.map((d, i) => {
+        const px =
+            n === 1
+                ? plotX + chartW / 2
+                : plotX + (chartW / (n - 1)) * i;
+
+        const py =
+            plotY +
+            chartH -
+            (((Number(d.ConsumptionValue) || 0) - minV) / range) * chartH;
+
+        return { px, py, d };
+    });
+
+    // =========================
+    // Line Graph
+    // =========================
+    doc.setDrawColor(10, 61, 98);
+    doc.setLineWidth(0.5);
+
+    for (let i = 0; i < points.length - 1; i++) {
+        doc.line(
+            points[i].px,
+            points[i].py,
+            points[i + 1].px,
+            points[i + 1].py
+        );
+    }
+
+    // =========================
+    // Data Point Markers
+    // =========================
+    doc.setFillColor(10, 61, 98);
+
+    points.forEach((p) => {
+        doc.circle(p.px, p.py, 0.9, "F");
+    });
+
+    // =========================
+    // Month Labels
+    // =========================
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(7);
+    doc.setTextColor(0, 0, 0);
+
+    points.forEach((p) => {
+        doc.text(
+            String(p.d.MonthName || ""),
+            p.px,
+            plotY + chartH + 4,
+            { align: "center" }
+        );
+    });
+
+    // =========================
+    // Axis Labels
+    // =========================
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(8);
+
+    // X-axis label
+    doc.text(
+        "Months",
+        plotX + chartW / 2,
+        y + height - 2,
+        { align: "center" }
+    );
+
+    // Y-axis label (vertical)
+    doc.text(
+        "Consumption (TRh)",
+        x + 8,
+        plotY + chartH / 2,
+        {
+            angle: 90,
+            align: "center",
+        }
+    );
+
+    // Reset font
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(0, 0, 0);
+
+    return y + height;
+}
 // ─── Styles ───────────────────────────────────────────────────────────────────
 const S = {
     page: { boxSizing: "border-box", fontFamily: "Arial, Helvetica, sans-serif", fontSize: "12px", color: "#000", margin: "20px" },
@@ -262,38 +475,161 @@ const S = {
     bold: { fontWeight: "bold" },
 
     // second page section
-    page2: { marginTop: "28px", borderTop: "2px solid #000", paddingTop: "16px" },
+    page2: { marginTop: "28px", paddingTop: "16px" },
     twoColRow: { display: "flex", gap: "20px", marginTop: "16px", alignItems: "flex-start" },
     halfCol: { flex: 1, fontSize: "11px" },
 
     // bank details
     bankTable: { width: "100%", borderCollapse: "collapse", fontSize: "11px", marginTop: "4px" },
-    bankTh: { border: "1px solid #000", padding: "5px 8px", fontWeight: "bold", textAlign: "left", background: "#fff" },
-    bankTd: { border: "1px solid #000", padding: "5px 8px", textAlign: "left" },
+    bankTh: { padding: "5px 8px", fontWeight: "bold", textAlign: "left", background: "#fff" },
+    bankTd: { padding: "5px 8px", textAlign: "left" },
 
     // contact block
-    contactBlock: { border: "1px solid #000", padding: "8px", fontSize: "11px", marginTop: "4px" },
+    contactBlock: { padding: "8px", fontSize: "11px", marginTop: "4px" },
     contactTitle: { fontWeight: "bold", marginBottom: "4px" },
     contactLine: { marginBottom: "3px", color: "#0a3d62" },
     contactPlain: { marginBottom: "3px" },
 
     // tips block
-    tipsBlock: { border: "1px solid #000", padding: "10px", fontSize: "11px", marginTop: "4px" },
+    tipsBlock: { padding: "10px", fontSize: "11px", marginTop: "4px" },
     tipsTitle: { fontWeight: "bold", marginBottom: "6px" },
     tipItem: { display: "flex", gap: "6px", marginBottom: "4px", alignItems: "flex-start" },
 
     statusMsg: (ok) => ({ marginTop: "10px", fontSize: "12px", color: ok ? "#16a34a" : "#b91c1c", textAlign: "right" }),
+
+    // consumption chart
+    chartSection: { marginTop: "20px", border: "1px solid #000", padding: "12px" },
+    chartTitleRow: { display: "flex", alignItems: "baseline", gap: "8px", marginBottom: "8px" },
+    chartTitleEn: { fontSize: "13px", fontWeight: "bold", color: "#0a3d62" },
+    chartTitleAr: { fontSize: "11px", color: "#0a3d62" },
+    chartUnit: { fontSize: "10px", color: "#555" },
 };
+// ─── Consumption line chart (HTML/SVG) ────────────────────────────────────────
+function ConsumptionChart({ data = [] }) {
+    if (!data || data.length === 0) {
+        return <div style={{ fontSize: "11px", color: "#666", padding: "6px 0" }}>No consumption data available.</div>;
+    }
+
+    const width = 700, height = 220;
+    const padding = { top: 16, right: 24, bottom: 42, left: 64 };
+
+    const chartW = width - padding.left - padding.right;
+    const chartH = height - padding.top - padding.bottom;
+
+    const values = data.map((d) => Number(d.ConsumptionValue) || 0);
+    const maxV = Math.max(...values, 1);
+    const minV = Math.min(0, ...values);
+    const range = (maxV - minV) || 1;
+
+    const n = data.length;
+
+    const points = data.map((d, i) => {
+        const x =
+            n === 1
+                ? padding.left + chartW / 2
+                : padding.left + (chartW / (n - 1)) * i;
+
+        const y =
+            padding.top +
+            chartH -
+            (((Number(d.ConsumptionValue) || 0) - minV) / range) * chartH;
+
+        return { x, y, d };
+    });
+
+    const polylinePoints = points.map((p) => `${p.x},${p.y}`).join(" ");
+    const gridCount = 4;
+
+    const gridLines = Array.from({ length: gridCount + 1 }, (_, i) => {
+        const gy = padding.top + chartH - (chartH * i) / gridCount;
+        const val = minV + (range * i) / gridCount;
+        return { y: gy, val };
+    });
+
+    const unit = data[0]?.UOM || "";
+
+    return (
+        <svg
+            viewBox={`0 0 ${width} ${height}`}
+            style={{ width: "100%", height: "auto", display: "block", fontFamily: "Arial, Helvetica, sans-serif" }}
+        >
+            <rect x={0.5} y={0.5} width={width - 1} height={height - 1} fill="none" stroke="#000" strokeWidth="1" />
+
+            {/* Grid + Y-axis values */}
+            {gridLines.map((g, i) => (
+                <g key={i}>
+                    <line x1={padding.left} y1={g.y} x2={width - padding.right} y2={g.y} stroke="#e0e0e0" strokeWidth="1" />
+                    <text x={padding.left - 6} y={g.y + 3} textAnchor="end" fontSize="9" fill="#555">
+                        {Math.round(g.val).toLocaleString()}
+                    </text>
+                </g>
+            ))}
+
+            {/* Axes */}
+            <line x1={padding.left} y1={padding.top} x2={padding.left} y2={height - padding.bottom} stroke="#000" strokeWidth="1" />
+            <line x1={padding.left} y1={height - padding.bottom} x2={width - padding.right} y2={height - padding.bottom} stroke="#000" strokeWidth="1" />
+
+            {/* Line */}
+            <polyline points={polylinePoints} fill="none" stroke="#0a3d62" strokeWidth="2" />
+
+            {/* Data points + X labels */}
+            {points.map((p, i) => (
+                <g key={i}>
+                    <circle cx={p.x} cy={p.y} r="3" fill="#0a3d62">
+                        <title>{`${p.d.MonthName} ${p.d.Year}: ${Number(p.d.ConsumptionValue).toLocaleString()} ${unit}`}</title>
+                    </circle>
+                    <text x={p.x} y={height - padding.bottom + 14} textAnchor="middle" fontSize="9" fill="#000">
+                        {p.d.MonthName}
+                    </text>
+                </g>
+            ))}
+
+            {/* Axis Labels */}
+            {/* X-axis label */}
+            <text
+                x={padding.left + chartW / 2}
+                y={height - 4}
+                textAnchor="middle"
+                fontSize="10"
+                fill="#333"
+            >
+                Months
+            </text>
+
+            {/* Y-axis label */}
+            <text
+                x={14}
+                y={padding.top + chartH / 2}
+                textAnchor="middle"
+                fontSize="10"
+                fill="#333"
+                transform={`rotate(-90 14 ${padding.top + chartH / 2})`}
+            >
+                Consumption (TRh)
+            </text>
+
+            {/* Unit label */}
+            <text x={4} y={padding.top - 4} fontSize="9" fill="#555">
+                {unit ? `(${unit})` : ""}
+            </text>
+        </svg>
+    );
+}
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 export default function TaxInvoiceReport({
     headerResponse = SAMPLE_HEADER,
     detailResponse = SAMPLE_DETAIL,
+    // Consumption history comes from a separate API, e.g.:
+    // [{ Year, Month, MonthName, ConsumptionValue, MeterTagName, UOM }, ...]
+    consumptionResponse = SAMPLE_CONSUMPTION,
 }) {
     const fields = new Fields(headerResponse, detailResponse);
     const [status, setStatus] = useState("");
     const [loadingPDF, setLoadingPDF] = useState(false);
     const [loadingExcel, setLoadingExcel] = useState(false);
+
+    const consumption = Array.isArray(consumptionResponse) ? consumptionResponse : [];
 
     const details = fields.get("Details") || [];
     const lastRow = details[details.length - 1] || {};
@@ -308,8 +644,7 @@ export default function TaxInvoiceReport({
     const doNotItems = ["SetThermostatTo20CORLower", "BlockVents", "LeaveDoorsWindowsOpen", "LeaveHeatProducing"];
 
     // ── Excel Export ──────────────────────────────────────────────────────────────
-    // NOTE: this was referenced by the toolbar button but never implemented in the
-    // original file, which meant the component threw a ReferenceError on render.
+
     function exportExcel() {
         setLoadingExcel(true); setStatus("Generating Excel…");
         try {
@@ -392,9 +727,7 @@ export default function TaxInvoiceReport({
             const setLatin = (style = "normal") => doc.setFont("helvetica", style);
 
 
-            // Small helper so every "Arabic sub-line under English" spot in the PDF
-            // matches the HTML pattern: <span style={{display:'block', ...}}> which
-            // renders left-aligned, directly under the English text — not right-aligned.
+
             const drawArSubline = (text, x, y, { size = 7.5, color = [10, 61, 98] } = {}) => {
                 if (!amiriB64 || !text) return;
                 doc.setFont("Amiri", "bold"); doc.setFontSize(size); doc.setTextColor(...color);
@@ -438,6 +771,7 @@ export default function TaxInvoiceReport({
 
             doc.addImage(logoBase64, "PNG", 160, 8, 40, 12);
 
+
             const infoRows = [
                 [fields.getLabel("Name"), fields.get("ConsumerName"), fields.getLabel("AccountNumber"), fields.get("AccountNumber")],
                 [fields.getLabel("UnitNo"), fields.get("UnitNo"), fields.getLabel("BillingDate"), fmtDate(fields.get("BillingDate"))],
@@ -445,11 +779,33 @@ export default function TaxInvoiceReport({
                 [fields.getLabel("InvoiceNumber"), fields.get("InvoiceNumber"), fields.getLabel("BillingPeriod"), fields.get("BillingPeriod")],
             ];
 
+
+            const leftRows = infoRows.map(([l1, v1]) => [enLine(l1), v1]);
+            const rightRows = infoRows.map(([, , l2, v2]) => [enLine(l2), v2]);
+
+
+            const startY = 28;
+            const gap = 101;
+
+            const leftX = 30;
+            const rightX = leftX + gap;
+
+
             autoTable(doc, {
-                body: infoRows.map(([l1, v1, l2, v2]) => [enLine(l1), v1, enLine(l2), v2]),
-                startY: 32, theme: "grid",
-                styles: { fontSize: 8.5, cellPadding: 3.5, lineColor: [0, 0, 0], lineWidth: 0.2, textColor: [10, 61, 98], },
-                columnStyles: { 0: { fontStyle: "bold", cellWidth: 32, textColor: [10, 61, 98] }, 1: { cellWidth: 58 }, 2: { fontStyle: "bold", cellWidth: 32, textColor: [10, 61, 98], }, 3: { cellWidth: 58 } },
+                body: leftRows,
+                startY: startY,
+                theme: "grid",
+                styles: {
+                    fontSize: 8.5,
+                    cellPadding: 3,
+                    lineColor: [0, 0, 0],
+                    lineWidth: 0.2,
+                    textColor: [10, 61, 98],
+                },
+                columnStyles: {
+                    0: { fontStyle: "bold", cellWidth: 28 },
+                    1: { cellWidth: 42 },
+                },
                 didDrawCell(data) {
                     if (!amiriB64) return;
                     const isLabel = data.column.index === 0 || data.column.index === 2;
@@ -461,6 +817,32 @@ export default function TaxInvoiceReport({
                 },
             });
 
+            autoTable(doc, {
+                body: rightRows,
+                startY: startY,
+                margin: { left: rightX },
+                theme: "grid",
+                styles: {
+                    fontSize: 8.5,
+                    cellPadding: 3,
+                    lineColor: [0, 0, 0],
+                    lineWidth: 0.2,
+                    textColor: [10, 61, 98],
+                },
+                columnStyles: {
+                    0: { fontStyle: "bold", cellWidth: 28 },
+                    1: { cellWidth: 42 },
+                },
+                didDrawCell(data) {
+                    if (!amiriB64) return;
+                    const isLabel = data.column.index === 0 || data.column.index === 2;
+                    if (data.section === "body" && isLabel) {
+                        const src = data.column.index === 0 ? infoRows[data.row.index][0] : infoRows[data.row.index][2];
+                        const ar = arLine(src);
+                        if (ar) drawArSubline(ar, data.cell.x + 3, data.cell.y + data.cell.height - 1.5, { size: 7.5 });
+                    }
+                },
+            });
             const detailHeaders = [
                 [enLine(fields.getLabel("Description")), arLine(fields.getLabel("Description"))],
                 [enLine(fields.getLabel("PreviousReading")), arLine(fields.getLabel("PreviousReading"))],
@@ -471,8 +853,7 @@ export default function TaxInvoiceReport({
                 [enLine(fields.getLabel("VAT")), arLine(fields.getLabel("VAT"))],
                 [enLine(fields.getLabel("TotalAmount")), arLine(fields.getLabel("TotalAmount"))],
             ];
-            console.log("RAW AR:", details[0]?.Description);
-            console.log("AR LINE:", arLine(details[0]?.Description));
+
             autoTable(doc, {
                 head: [detailHeaders.map(([en]) => en)],
                 body: details.map((r) => [
@@ -484,9 +865,9 @@ export default function TaxInvoiceReport({
                 startY: doc.lastAutoTable.finalY + 2,
                 styles: { fontSize: 8, cellPadding: 1.5, lineColor: [0, 0, 0], lineWidth: 0.2, textColor: [0, 0, 0], overflow: 'linebreak' },
                 headStyles: { fillColor: [255, 255, 255], textColor: [10, 61, 98], fontStyle: "bold", lineColor: [0, 0, 0], lineWidth: 0.2, halign: "left" },
-                footStyles: { fillColor: [255, 255, 255], textColor: [10, 61, 98], fontStyle: "bold", lineColor: [0, 0, 0], lineWidth: 0.2 },
+                footStyles: { fillColor: [255, 255, 255], textColor: [10, 61, 98], fontStyle: "bold", lineColor: [0, 0, 0], lineWidth: 0.2, halign: "left" },
                 columnStyles: {
-                    0: { cellWidth: 46, textColor: [10, 61, 98], }, 1: { cellWidth: 19, halign: "right" }, 2: { cellWidth: 19, halign: "right" },
+                    0: { cellWidth: 52, textColor: [10, 61, 98], }, 1: { cellWidth: 16, halign: "right" }, 2: { cellWidth: 16, halign: "right" },
                     3: { cellWidth: 17, halign: "right" }, 4: { cellWidth: 20, halign: "right" },
                     5: { cellWidth: 25, halign: "right" }, 6: { cellWidth: 16, halign: "right" }, 7: { cellWidth: 25, halign: "right" },
                 },
@@ -510,10 +891,10 @@ export default function TaxInvoiceReport({
                 didParseCell: function (data) {
                     if (data.section === "body" && data.column.index === 0) {
                         data.cell.styles.fontSize = 8;
-                        data.cell.styles.minCellHeight = 8;
+                        data.cell.styles.minCellHeight = 10
                         data.cell.styles.cellPadding = {
-                            top: 1.5,
-                            right: 1.5,
+                            top: 1,
+                            right: 1,
                             bottom: 2,
                             left: 1.5,
                         };
@@ -525,9 +906,7 @@ export default function TaxInvoiceReport({
 
             });
 
-            // Summary table — column widths sum to 187mm (46+19+19+17+20+25+16+25) to line
-            // up flush with the detail table above it, matching the HTML where the
-            // summary row's colSpan={7} label cell + 1 value cell span the same grid.
+
             const summaryData = [
                 [enLine(fields.getLabel("PreviousBalance")), arLine(fields.getLabel("PreviousBalance")), fmtMoney(previousBalance)],
                 [enLine(fields.getLabel("AdjustmentAmount")), arLine(fields.getLabel("AdjustmentAmount")), fmtMoney(adjustmentAmount)],
@@ -561,17 +940,16 @@ export default function TaxInvoiceReport({
             setArabic(); doc.setFontSize(8);
             doc.text(arLine(fields.getLabel("WayToPayDesc")), 48, y + 5);
             setLatin("normal"); doc.setFontSize(8);
-            doc.text(enLine(fields.getLabel("Note")), 107, y, { maxWidth: 88 });
+            doc.text(enLine(fields.getLabel("Note")), 110, y, { maxWidth: 88 });
             setArabic(); doc.setFontSize(7.5);
-            doc.text(arLine(fields.getLabel("Note")), 107, y + 5, { maxWidth: 88 });
+            doc.text(arLine(fields.getLabel("Note")), 110, y + 5, { maxWidth: 88 });
             setLatin("normal"); doc.setFontSize(7.5);
-            doc.text(enLine(fields.getLabel("Estimate")), 107, y + 12, { maxWidth: 88 });
+            doc.text(enLine(fields.getLabel("Estimate")), 110, y + 12, { maxWidth: 88 });
             setArabic(); doc.setFontSize(7.5);
-            doc.text(arLine(fields.getLabel("Estimate")), 107, y + 17, { maxWidth: 88 });
+            doc.text(arLine(fields.getLabel("Estimate")), 110, y + 17, { maxWidth: 88 });
 
             // ── Page 2 ─────────────────────────────────────────────────────────────
-            doc.addPage();
-            y = 16;
+            y = y + 30;
 
             autoTable(doc, {
                 head: [["Bank Details:", ""]],
@@ -591,12 +969,12 @@ export default function TaxInvoiceReport({
                     doc.text(line, 127, contactY + 10 + i * 6);
                 });
 
-            y = Math.max(doc.lastAutoTable.finalY, contactY + 44) + 10;
+            y = Math.max(doc.lastAutoTable.finalY, contactY + 44) + 10 + 32;
 
             const tryRows = tryToItems.map((k) => [enLine(fields.getLabel(k)), arLine(fields.getLabel(k))]);
             const doNotRows = doNotItems.map((k) => [enLine(fields.getLabel(k)), arLine(fields.getLabel(k))]);
 
-            const makeTipTable = (headLabel,subLabel, rows, startY, marginLeft) => {
+            const makeTipTable = (headLabel, subLabel, rows, startY, marginLeft) => {
                 autoTable(doc, {
                     head: [[headLabel]],
                     body: rows.map(([en]) => [`\u2022 ${en}`]),
@@ -612,16 +990,29 @@ export default function TaxInvoiceReport({
                             if (ar) drawArSubline(ar, data.cell.x + 2, data.cell.y + data.cell.height - 1, { size: 7 });
                         }
                         if (data.section === "head") {
-                            const ar = subLabel
+                            const ar = subLabel;
                             if (ar) drawArSubline(ar, data.cell.x + 2, data.cell.y + data.cell.height - 1, { size: 7 });
                         }
-                        
+
                     },
                 });
+                return doc.lastAutoTable.finalY;
             };
+            doc.addPage();
+            y = 16;
 
-            makeTipTable(`${enLine(fields.getLabel("PleaseTryTo"))}`,`${arLine(fields.getLabel("PleaseTryTo"))}`, tryRows, y, undefined);
-            makeTipTable(`${enLine(fields.getLabel("PleaseDoNot"))}`,`${arLine(fields.getLabel("PleaseDoNot"))}`, doNotRows, y, 107);
+            const tryFinalY = makeTipTable(`${enLine(fields.getLabel("PleaseTryTo"))}`, `${arLine(fields.getLabel("PleaseTryTo"))}`, tryRows, y, undefined);
+            const doNotFinalY = makeTipTable(`${enLine(fields.getLabel("PleaseDoNot"))}`, `${arLine(fields.getLabel("PleaseDoNot"))}`, doNotRows, y, 107);
+
+            // ── Consumption History Chart ─────────────────────────────────────────
+            let chartY = Math.max(tryFinalY, doNotFinalY) + 12;
+            const chartHeight = 65;
+            const chartWidth = 182;
+            if (chartY + 10 + chartHeight > 280) { doc.addPage(); chartY = 16; }
+
+            setLatin("bold"); doc.setFontSize(10); doc.setTextColor(10, 61, 98);
+            doc.text("Monthly Consumption Data", 14, chartY);
+            drawConsumptionChart(doc, consumption, 14, chartY + 5, chartWidth, chartHeight);
 
             doc.save(`${fields.get("InvoiceNumber") || "tax_invoice"}.pdf`);
             setStatus("\u2713 PDF downloaded.");
@@ -629,7 +1020,6 @@ export default function TaxInvoiceReport({
         finally { setLoadingPDF(false); }
     }
 
-    // ─── Render ───────────────────────────────────────────────────────────────────
     return (
         <div style={S.page}>
             <div style={S.toolbar}>
@@ -650,7 +1040,7 @@ export default function TaxInvoiceReport({
                 </div>
 
                 {/* Info grid */}
-                <table style={S.infoTable}>
+                {/* <table style={S.infoTable}>
                     <tbody>
                         {[
                             [fields.getLabel("Name"), fields.get("ConsumerName"), fields.getLabel("AccountNumber"), fields.get("AccountNumber")],
@@ -666,7 +1056,51 @@ export default function TaxInvoiceReport({
                             </tr>
                         ))}
                     </tbody>
-                </table>
+                </table> */}
+
+                <div style={{ display: "flex", gap: "20px", marginTop: "10px" }}>
+
+                    {/* LEFT TABLE */}
+                    <table style={{ ...S.infoTable, width: "50%", marginRight: "30px" }}>
+                        <tbody>
+                            {[
+                                [fields.getLabel("Name"), fields.get("ConsumerName")],
+                                [fields.getLabel("UnitNo"), fields.get("UnitNo")],
+                                [fields.getLabel("TowerName"), fields.get("BuildingName")],
+                                [fields.getLabel("InvoiceNumber"), fields.get("InvoiceNumber")],
+                            ].map((row, i) => (
+                                <tr key={i}>
+                                    <td style={S.infoCellLabel}>
+                                        {enLine(row[0])}
+                                        <span style={S.infoCellLabelAr}>{arLine(row[0])}</span>
+                                    </td>
+                                    <td style={S.infoCellValue}>{row[1]}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+
+                    {/* RIGHT TABLE */}
+                    <table style={{ ...S.infoTable, width: "50%", marginLeft: "40px" }}>
+                        <tbody>
+                            {[
+                                [fields.getLabel("AccountNumber"), fields.get("AccountNumber")],
+                                [fields.getLabel("BillingDate"), fmtDate(fields.get("BillingDate"))],
+                                [fields.getLabel("DueDate"), fmtDate(fields.get("DueDate"))],
+                                [fields.getLabel("BillingPeriod"), fields.get("BillingPeriod")],
+                            ].map((row, i) => (
+                                <tr key={i}>
+                                    <td style={S.infoCellLabel}>
+                                        {enLine(row[0])}
+                                        <span style={S.infoCellLabelAr}>{arLine(row[0])}</span>
+                                    </td>
+                                    <td style={S.infoCellValue}>{row[1]}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+
+                </div>
 
                 {/* Detail table */}
                 <table style={S.table}>
@@ -811,6 +1245,15 @@ export default function TaxInvoiceReport({
                             </div>
                         </div>
 
+                    </div>
+
+                    {/* Consumption History Chart */}
+                    <div style={S.chartSection}>
+                        <div style={S.chartTitleRow}>
+                            <span style={S.chartTitleEn}>Consumption Monthly data</span>
+
+                        </div>
+                        <ConsumptionChart data={consumption} />
                     </div>
                 </div>
 
