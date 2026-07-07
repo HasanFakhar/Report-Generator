@@ -1,0 +1,67 @@
+[
+    {
+        "ServiceAgreementKey": "07A327D2-DD59-42E2-BDBA-DE4C72DF8F2A",
+        "UnitID": 1136,
+        "UnitNumber": "1",
+        "AccountNumber": "RR1G01T1",
+        "CustomerName": "Sayin Matheme",
+        "ZeroToThirty": 0,
+        "ThirtyToSixty": 0,
+        "SixtyToNinty": 0,
+        "NintyToOneEighty": -0.01,
+        "OneEightyPlus": 0,
+        "TotalAmount": -0.01,
+        "TotalAmountUOM": "AED",
+        "GeneratedBy": "np",
+        "GeneratedOn": "07/07/2026"
+    },
+    {
+        "ServiceAgreementKey": "2B36E590-05B7-414D-B5F3-A69D692744E3",
+        "UnitID": 1136,
+        "UnitNumber": "1",
+        "AccountNumber": "RR1G01T4",
+        "CustomerName": "Haroon ur Rauf",
+        "ZeroToThirty": 529.54,
+        "ThirtyToSixty": 545.8,
+        "SixtyToNinty": 0,
+        "NintyToOneEighty": 0,
+        "OneEightyPlus": 0,
+        "TotalAmount": 1075.34,
+        "TotalAmountUOM": "AED",
+        "GeneratedBy": "np",
+        "GeneratedOn": "07/07/2026"
+    },
+    {
+        "ServiceAgreementKey": "B266C519-7B42-44E0-941B-D4491A1EB6A9",
+        "UnitID": 1136,
+        "UnitNumber": "1",
+        "AccountNumber": "RR1G01O1",
+        "CustomerName": "Anita Khanna",
+        "ZeroToThirty": 0,
+        "ThirtyToSixty": 0,
+        "SixtyToNinty": 0,
+        "NintyToOneEighty": 526.27002,
+        "OneEightyPlus": 0,
+        "TotalAmount": 526.27002,
+        "TotalAmountUOM": "AED",
+        "GeneratedBy": "np",
+        "GeneratedOn": "07/07/2026"
+    },
+    {
+        "ServiceAgreementKey": "A74829D5-583F-409A-94FD-4B7EB5E7C176",
+        "UnitID": 1145,
+        "UnitNumber": "10",
+        "AccountNumber": "RR1G10O2",
+        "CustomerName": "AYESHA NAEEM RANA MUHAMMAD NAEEM",
+        "ZeroToThirty": 0,
+        "ThirtyToSixty": 0,
+        "SixtyToNinty": 0,
+        "NintyToOneEighty": 285.37,
+        "OneEightyPlus": 0,
+        "TotalAmount": 285.37,
+        "TotalAmountUOM": "AED",
+        "GeneratedBy": "np",
+        "GeneratedOn": "07/07/2026"
+    }
+
+]

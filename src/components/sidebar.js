@@ -3,6 +3,7 @@ import React from 'react';
 const NAV_ITEMS = [
   { id: 'tax-invoice', label: 'Tax Invoice' },
   { id: 'statement', label: 'Statement of Account' },
+  { id: 'aging', label: 'Aging Report' },
 ];
 
 export default function Sidebar({ activePage, onNavigate }) {
