@@ -3,22 +3,50 @@ import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import Fields from "../models/Fields";
+
+
+async function loadData(path) {
+  try {
+    const response = await fetch(path); 
+    if (!response.ok) throw new Error('Network response was not ok');
+
+    const data = await response.json();
+    return data
+
+
+  } catch (error) {
+    console.error('Error reading JSON:', error);
+  }
+  
+}
+
 // ─── Sample data ──────────────────────────────────────────────────────────────
 const SAMPLE_HEADER = {
-    data: {
-        ConsumerName: "Druvanshi Patil", UnitNo: "105", BuildingName: "ROYAL RESIDENCE 1",
-        InvoiceNumber: "RR16410", AccountNumber: "RR1105T4", BillingDate: null, DueDate: null,
-        BillingPeriod: "01/06/2026 - 01/06/2026",
-        OperatingCompanyAddress: "LYNX District Cooling Services\nDubai Stadium point- Unit 312, Dubai, UAE",
-        ContactNumber: "Call: +971 45762953", WhatsAppNumber: "Whatsapp: +971 585536949",
-    },
-    labels: {
-        DueDate: "Due Date:\nتاريخ الاستحقاق", Name: "Name:\nالاسم", UnitNo: "Unit No.:\nرقم الوحدة",
-        BillingPeriod: "Billing Period:\nفترة الفوترة", AccountNumber: "Account Number:\nرقم الحساب",
-        TaxInvoice: "TAX INVOICE\nفاتورة ضريبية", BillingDate: "Billing Date:\nتاريخ الفاتورة",
-        InvoiceNumber: "Invoice Number:\nرقم الفاتورة", TowerName: "Tower Name:\nاسم البرج",
-    },
-};
+  "data": {
+    "ConsumerName": "Druvanshi Patil",
+    "UnitNo": "105",
+    "BuildingName": "ROYAL RESIDENCE 1",
+    "InvoiceNumber": "RR16410",
+    "AccountNumber": "RR1105T4",
+    "BillingDate": null,
+    "DueDate": null,
+    "BillingPeriod": "01/06/2026 - 01/06/2026",
+    "OperatingCompanyAddress": "LYNX District Cooling Services\nDubai Stadium point- Unit 312, Dubai, UAE",
+    "ContactNumber": "Call: +971 45762953",
+    "WhatsAppNumber": "Whatsapp: +971 585536949"
+  },
+  "labels": {
+    "DueDate": "Due Date:\nتاريخ الاستحقاق",
+    "Name": "Name:\nالاسم",
+    "UnitNo": "Unit No.:\nرقم الوحدة",
+    "BillingPeriod": "Billing Period:\nفترة الفوترة",
+    "AccountNumber": "Account Number:\nرقم الحساب",
+    "TaxInvoice": "TAX INVOICE\nفاتورة ضريبية",
+    "BillingDate": "Billing Date:\nتاريخ الفاتورة",
+    "InvoiceNumber": "Invoice Number:\nرقم الفاتورة",
+    "TowerName": "Tower Name:\nاسم البرج"
+  }
+}
 const SAMPLE_DETAIL = {
     "data": [
         {
@@ -257,15 +285,40 @@ const SAMPLE_DETAIL = {
     }
 }
 
-// Sample consumption data — shape matches what the consumption API returns:
-// [{ Year, Month, MonthName, ConsumptionValue, MeterTagName, UOM }, ...]
 const SAMPLE_CONSUMPTION = [
-    { Year: 2026, Month: 3, MonthName: "Mar", ConsumptionValue: 850.72, MeterTagName: "Consumption", UOM: "kWh" },
-    { Year: 2026, Month: 4, MonthName: "Apr", ConsumptionValue: 823.28, MeterTagName: "Consumption", UOM: "kWh" },
-    { Year: 2026, Month: 5, MonthName: "May", ConsumptionValue: 999, MeterTagName: "Consumption", UOM: "kWh" },
-    { Year: 2026, Month: 6, MonthName: "June", ConsumptionValue: 0, MeterTagName: "Consumption", UOM: "kWh" },
-
-];
+  {
+    "Year": 2026,
+    "Month": 3,
+    "MonthName": "Mar",
+    "ConsumptionValue": 850.72,
+    "MeterTagName": "Consumption",
+    "UOM": "kWh"
+  },
+  {
+    "Year": 2026,
+    "Month": 4,
+    "MonthName": "Apr",
+    "ConsumptionValue": 823.28,
+    "MeterTagName": "Consumption",
+    "UOM": "kWh"
+  },
+  {
+    "Year": 2026,
+    "Month": 5,
+    "MonthName": "May",
+    "ConsumptionValue": 999,
+    "MeterTagName": "Consumption",
+    "UOM": "kWh"
+  },
+  {
+    "Year": 2026,
+    "Month": 6,
+    "MonthName": "June",
+    "ConsumptionValue": 0,
+    "MeterTagName": "Consumption",
+    "UOM": "kWh"
+  }
+]
 
 const BANK_DETAILS = [
     ["Account Title", "LYNX TECHNICAL SERVICES L.L.C"],
@@ -284,9 +337,7 @@ const arLine = (t) => {
 }; const fmtMoney = (v) => (v === null || v === undefined) ? "" : Number(v).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const fmtDate = (v) => { if (!v) return ""; const d = new Date(v); return isNaN(d) ? v : d.toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", year: "numeric" }); };
 
-// Draws a simple line chart for consumption history directly with jsPDF
-// primitives (lines/circles/text) — no image conversion needed, so it stays
-// crisp at any zoom level. Returns the y-coordinate just below the chart.
+
 function drawConsumptionChart(doc, data, x, y, width, height) {
     if (!Array.isArray(data) || data.length === 0) return y;
 
