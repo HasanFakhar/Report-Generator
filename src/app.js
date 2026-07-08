@@ -3,6 +3,7 @@ import Sidebar from './components/sidebar';
 import TaxInvoiceReport from './reports/tax_invoice';
 import StatementOfAccount from './reportPage';
 import AgingReport from './reports/aging_report';
+import NOCReport from './reports/noc';
 
 export default function App() {
   const [activePage, setActivePage] = useState('tax-invoice');
@@ -14,6 +15,7 @@ export default function App() {
         {activePage === 'tax-invoice' && <TaxInvoiceReport />}
         {activePage === 'statement' && <StatementOfAccount />}
         {activePage === 'aging' && <AgingReport />}
+        {activePage === 'noc' && <NOCReport />}
 
       </main>
     </div>

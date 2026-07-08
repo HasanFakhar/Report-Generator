@@ -4,6 +4,7 @@ const NAV_ITEMS = [
   { id: 'tax-invoice', label: 'Tax Invoice' },
   { id: 'statement', label: 'Statement of Account' },
   { id: 'aging', label: 'Aging Report' },
+  { id: 'noc', label: 'No Objection Certificate' },
 ];
 
 export default function Sidebar({ activePage, onNavigate }) {
