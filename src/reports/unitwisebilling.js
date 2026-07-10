@@ -45,10 +45,11 @@ const COLUMNS = [
     { key: "TotalAmount", label: "Total Amount", type: "amount" },
     { key: "TotalVATAmount", label: "Total VAT Amount", type: "amount" },
     { key: "BilledAmount", label: "Billed Amount", type: "amount" },
-    { key: "TotalBillingAmount", label: "Total Billing Amount", type: "total" },
     { key: "OpeningPreviousBalance", label: "Opening Balance", type: "amount" },
     { key: "AdvanceAmount", label: "Advance Amount", type: "amount" },
     { key: "TotalAdjustmentAmount", label: "Total Adjustment", type: "amount" },
+    { key: "TotalBillingAmount", label: "Total Billing Amount", type: "total" },
+
 ];
 
 const SUM_KEYS = [
@@ -67,10 +68,10 @@ const SUM_KEYS = [
     "TotalAmount",
     "TotalVATAmount",
     "BilledAmount",
-    "TotalBillingAmount",
     "OpeningPreviousBalance",
     "AdvanceAmount",
-    "TotalAdjustmentAmount"
+    "TotalAdjustmentAmount",
+    "TotalBillingAmount"
 ];
 
 /* ------------------------------------------------------------------ */
