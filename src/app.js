@@ -7,6 +7,7 @@ import NOCReport from './reports/noc';
 import CollectionReport from './reports/collection_report';
 import UnitWiseBillingReport from './reports/unitwisebilling.js';
 import PaymentSummaryReport from './reports/paymentSummaryReport.js';
+import TowerWiseBillingReport from './reports/towerwisebilling.js';
 
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
         {activePage === 'collection' && <CollectionReport />}
         {activePage === 'unitwise-billing' && <UnitWiseBillingReport />}
         {activePage === 'payment-summary' && <PaymentSummaryReport />}
+        {activePage === 'tower-wise-billing' && <TowerWiseBillingReport />}
 
       </main>
     </div>

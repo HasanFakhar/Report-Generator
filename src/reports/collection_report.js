@@ -353,7 +353,7 @@ export default function CollectionReport({ fetchData }) {
 /* ------------------------------------------------------------------ */
 const styles = {
   app: {
-    maxWidth: 1300,
+    maxWidth: 900,
     margin: "0 auto",
     padding: "20px 20px 60px",
     fontFamily: "'Segoe UI', system-ui, -apple-system, sans-serif",
