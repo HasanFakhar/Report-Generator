@@ -1,4 +1,23 @@
-
+/**
+ * PaymentSummaryReport.jsx
+ * ------------------------------------------------------------------
+ * Drop-in React component for a Payment Summary Report with:
+ *   - Tower Name / To Date filters + Generate Report action
+ *   - Live HTML preview (flat styling matching the PDF output)
+ *   - Export to PDF (jsPDF + jspdf-autotable)
+ *   - Export to Excel (SheetJS / xlsx)
+ *
+ * Install dependencies in your project:
+ *   npm install jspdf jspdf-autotable xlsx
+ *
+ * Usage:
+ *   import PaymentSummaryReport from "./PaymentSummaryReport";
+ *   <PaymentSummaryReport fetchData={(tower, toDate) => fetch(...).then(r => r.json())} />
+ *
+ * If no fetchData prop is supplied, the component falls back to the
+ * sample payload below so it renders out of the box.
+ * ------------------------------------------------------------------
+ */
 
 import React, { useState, useMemo, useCallback } from "react";
 import jsPDF from "jspdf";
@@ -7,11 +26,9 @@ import * as XLSX from "xlsx";
 import Select from "react-select";
 
 
-
-
 async function loadData() {
     try {
-        const response = await fetch('/data/collectionreport_data.json');
+        const response = await fetch('/data/payment_summary_data.json');
         if (!response.ok) throw new Error('Network response was not ok');
         console.log(response[1])
         const data = await response.json()
@@ -24,20 +41,37 @@ async function loadData() {
 
 }
 const SAMPLE_DATA = await loadData();
-
 const TOWERS = {
-    "ROYAL RESIDENCE 1 key ": "ROYAL RESIDENCE 1 ",
-    "ROYAL RESIDENCE 2 key ": "ROYAL RESIDENCE 2 ",
-    "ROYAL RESIDENCE 3 key": "ROYAL RESIDENCE 3 "
+    "ROYAL RESIDENCE 1 key ": "ROYAL RESIDENCE 1",
+    "ROYAL RESIDENCE 2 key ": "ROYAL RESIDENCE 2",
+    "ROYAL RESIDENCE 3 key": "ROYAL RESIDENCE 3"
 };
 const COLUMNS = [
-  { key: "CollectionDate", label: "Collection Date", type: "date" },
-  { key: "ConsumerName", label: "Customer Name", type: "text" },
-  { key: "PaymentType", label: "Payment Type", type: "text" },
-  { key: "Total", label: "Total", type: "total" },
+  { key: "UnitNumber", label: "Unit No.", type: "text" },
+  { key: "SecurityDeposite", label: "Security Deposit (AED)", type: "money" },
+  { key: "OpeningBalance", label: "Opening Balance (AED)", type: "money" },
+  { key: "PreviousBalance", label: "Previous Balance (AED)", type: "money" },
+  { key: "ConsumptionFuelSubCharges", label: "Consumption Fuel Sub Charges (AED)", type: "money" },
+  { key: "CapacityDemandCharges", label: "Capacity Demand Charges (AED)", type: "money" },
+  { key: "BillingFee", label: "Billing Fee (AED)", type: "money" },
+  { key: "OtherFee", label: "Other Fee (AED)", type: "money" },
+  { key: "ReceptionAmount", label: "Reception Amount (AED)", type: "money" },
+  { key: "AdvanceAmount", label: "Advance Amount (AED)", type: "money" },
+  { key: "OutstandingAmount", label: "Outstanding Amount (AED)", type: "total" },
 ];
 
-const SUM_KEYS = ["Total"];
+const SUM_KEYS = [
+  "SecurityDeposite",
+  "OpeningBalance",
+  "PreviousBalance",
+  "ConsumptionFuelSubCharges",
+  "CapacityDemandCharges",
+  "BillingFee",
+  "OtherFee",
+  "ReceptionAmount",
+  "AdvanceAmount",
+  "OutstandingAmount",
+];
 
 /* ------------------------------------------------------------------ */
 /* Helpers                                                             */
@@ -50,24 +84,10 @@ const fmt = (n) =>
 
 const isoToApiDate = (iso) => {
   const [y, m, d] = iso.split("-");
-  return `${d}/${m}/${y}`;
+  return `${m}/${d}/${y}`;
 };
 
-const fmtDateTime = (iso) => {
-  const d = new Date(iso);
-  const dd = String(d.getDate()).padStart(2, "0");
-  const mm = String(d.getMonth() + 1).padStart(2, "0");
-  const yyyy = d.getFullYear();
-  const hh = String(d.getHours()).padStart(2, "0");
-  const min = String(d.getMinutes()).padStart(2, "0");
-  return `${dd}/${mm}/${yyyy} ${hh}:${min}`;
-};
-
-const cellValue = (col, row) => {
-  if (col.type === "date") return fmtDateTime(row[col.key]);
-  if (col.type === "text") return row[col.key];
-  return fmt(row[col.key]);
-};
+const cellValue = (col, row) => (col.type === "text" ? row[col.key] : fmt(row[col.key]));
 
 function sumTotals(rows) {
   const totals = {};
@@ -79,18 +99,15 @@ function sumTotals(rows) {
 /* ------------------------------------------------------------------ */
 /* Component                                                           */
 /* ------------------------------------------------------------------ */
-export default function CollectionReport({ fetchData }) {
+export default function PaymentSummaryReport({ fetchData }) {
   const [tower, setTower] = useState(Object.keys(TOWERS)[0]);
-  const [fromDate, setFromDate] = useState("2026-06-01");
-  const [toDate, setToDate] = useState("2026-07-09");
+  const [toDate, setToDate] = useState("2026-07-10");
   const [data, setData] = useState(SAMPLE_DATA);
   const [loading, setLoading] = useState(false);
 
-  const apiFrom = isoToApiDate(fromDate);
-  const apiTo = isoToApiDate(toDate);
+  const apiDate = isoToApiDate(toDate);
   const generatedBy = data[0]?.GeneratedBy || "—";
-  const generatedOn = data[0]?.GeneratedOn || apiTo;
-  const uom = data[0]?.TotalUOM || "AED";
+  const generatedOn = data[0]?.GeneratedOn || apiDate;
 
   const totals = useMemo(() => sumTotals(data), [data]);
 
@@ -101,14 +118,14 @@ export default function CollectionReport({ fetchData }) {
     }
     setLoading(true);
     try {
-      const result = await fetchData(tower, apiFrom, apiTo);
+      const result = await fetchData(tower, apiDate);
       setData(Array.isArray(result) ? result : []);
     } catch (err) {
-      console.error("Failed to load collection report:", err);
+      console.error("Failed to load payment summary report:", err);
     } finally {
       setLoading(false);
     }
-  }, [fetchData, tower, apiFrom, apiTo]);
+  }, [fetchData, tower, apiDate]);
 
   const handleExportPdf = useCallback(() => {
     const doc = new jsPDF({ orientation: "landscape", unit: "pt", format: "a4" });
@@ -117,7 +134,7 @@ export default function CollectionReport({ fetchData }) {
     doc.setFontSize(13);
     doc.setFont(undefined, "bold");
     doc.setTextColor(16, 36, 61);
-    doc.text(`${TOWERS[tower]} Collection Report ${apiFrom} to ${apiTo}`, pageWidth / 2, 40, { align: "center" });
+    doc.text(`${TOWERS[tower]} Payment Summary Report till ${apiDate}`, pageWidth / 2, 40, { align: "center" });
 
     doc.setFontSize(9);
     doc.setFont(undefined, "normal");
@@ -130,15 +147,14 @@ export default function CollectionReport({ fetchData }) {
 
     const footRow = COLUMNS.map((c, i) => {
       if (i === 0) return "Totals";
-      if (c.type === "text" || c.type === "date") return "";
-      if (c.key === "Total") return `${fmt(totals.Total)} ${uom}`;
+      if (c.key === "OutstandingAmount") return fmt(totals.OutstandingAmount);
       return fmt(totals[c.key]);
     });
     body.push(footRow);
 
     const columnStyles = {};
     COLUMNS.forEach((c, i) => {
-      columnStyles[i] = { halign: c.type === "text" || c.type === "date" ? "left" : "right" };
+      columnStyles[i] = { halign: c.type === "text" ? "left" : "right" };
       if (c.type === "total") columnStyles[i].fontStyle = "bold";
     });
 
@@ -146,8 +162,8 @@ export default function CollectionReport({ fetchData }) {
       head,
       body,
       startY: 76,
-      styles: { fontSize: 9.5, cellPadding: 6, lineColor: [221, 227, 234], lineWidth: 0.5 },
-      headStyles: { fillColor: [234, 241, 251], textColor: [16, 36, 61], fontStyle: "bold", fontSize: 9.5 },
+      styles: { fontSize: 8, cellPadding: 5, lineColor: [221, 227, 234], lineWidth: 0.5 },
+      headStyles: { fillColor: [234, 241, 251], textColor: [16, 36, 61], fontStyle: "bold", fontSize: 8 },
       columnStyles,
       alternateRowStyles: { fillColor: [249, 251, 253] },
       didParseCell: (cellData) => {
@@ -158,27 +174,17 @@ export default function CollectionReport({ fetchData }) {
       },
     });
 
-    doc.save(`Collection_Report_${tower.replace(/\s+/g, "_")}_${apiTo.replace(/\//g, "-")}.pdf`);
-  }, [data, tower, apiFrom, apiTo, generatedBy, generatedOn, totals, uom]);
+    doc.save(`Payment_Summary_Report_${tower.replace(/\s+/g, "_")}_${apiDate.replace(/\//g, "-")}.pdf`);
+  }, [data, tower, apiDate, generatedBy, generatedOn, totals]);
 
   const handleExportXlsx = useCallback(() => {
     const header = COLUMNS.map((c) => c.label);
-    const rows = data.map((r) =>
-      COLUMNS.map((c) => {
-        if (c.type === "date") return fmtDateTime(r[c.key]);
-        if (c.type === "text") return r[c.key];
-        return Number(r[c.key]);
-      })
-    );
+    const rows = data.map((r) => COLUMNS.map((c) => (c.type === "text" ? r[c.key] : Number(r[c.key]))));
 
-    const footRow = COLUMNS.map((c, i) => {
-      if (i === 0) return "Totals";
-      if (c.type === "text" || c.type === "date") return "";
-      return totals[c.key];
-    });
+    const footRow = COLUMNS.map((c, i) => (i === 0 ? "Totals" : totals[c.key]));
 
     const aoa = [
-      [`${tower} Collection Report ${apiFrom} to ${apiTo}`],
+      [`${TOWERS[tower]} Payment Summary Report till ${apiDate}`],
       [
         `Generated On: ${generatedOn}`,
         ...Array(COLUMNS.length - 2).fill(""),
@@ -191,15 +197,13 @@ export default function CollectionReport({ fetchData }) {
     ];
 
     const ws = XLSX.utils.aoa_to_sheet(aoa);
-    ws["!cols"] = COLUMNS.map((c) => ({
-      wch: c.type === "text" ? 20 : c.type === "date" ? 18 : 14,
-    }));
+    ws["!cols"] = COLUMNS.map((c) => ({ wch: c.type === "text" ? 12 : 18 }));
     ws["!merges"] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: COLUMNS.length - 1 } }];
 
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Collection Report");
-    XLSX.writeFile(wb, `Collection_Report_${tower.replace(/\s+/g, "_")}_${apiTo.replace(/\//g, "-")}.xlsx`);
-  }, [data, tower, apiFrom, apiTo, generatedBy, generatedOn, totals]);
+    XLSX.utils.book_append_sheet(wb, ws, "Payment Summary Report");
+    XLSX.writeFile(wb, `Payment_Summary_Report_${tower.replace(/\s+/g, "_")}_${apiDate.replace(/\//g, "-")}.xlsx`);
+  }, [data, tower, apiDate, generatedBy, generatedOn, totals]);
 
   return (
     <div style={styles.app}>
@@ -235,15 +239,6 @@ export default function CollectionReport({ fetchData }) {
                         />
           </div>
           <div style={styles.field}>
-            <label style={styles.label}>From Date</label>
-            <input
-              style={styles.input}
-              type="date"
-              value={fromDate}
-              onChange={(e) => setFromDate(e.target.value)}
-            />
-          </div>
-          <div style={styles.field}>
             <label style={styles.label}>To Date</label>
             <input style={styles.input} type="date" value={toDate} onChange={(e) => setToDate(e.target.value)} />
           </div>
@@ -271,7 +266,7 @@ export default function CollectionReport({ fetchData }) {
       {/* Report sheet / HTML preview */}
       <div style={styles.sheet}>
         <div style={styles.sheetInner}>
-          <div style={styles.reportTitle}>{`${TOWERS[tower]} Collection Report ${apiFrom} to ${apiTo}`}</div>
+          <div style={styles.reportTitle}>{`${TOWERS[tower]} Payment Summary Report till ${apiDate}`}</div>
           <div style={styles.reportMeta}>
             <span>
               Generated On: <b>{generatedOn}</b>
@@ -282,7 +277,7 @@ export default function CollectionReport({ fetchData }) {
           </div>
 
           {data.length === 0 ? (
-            <div style={styles.empty}>No collections for the selected tower and date range.</div>
+            <div style={styles.empty}>No records for the selected tower and date.</div>
           ) : (
             <table style={styles.table}>
               <thead>
@@ -292,7 +287,7 @@ export default function CollectionReport({ fetchData }) {
                       key={c.key}
                       style={{
                         ...styles.th,
-                        textAlign: c.type === "text" || c.type === "date" ? "left" : "right",
+                        textAlign: c.type === "text" ? "left" : "right",
                       }}
                     >
                       {c.label}
@@ -302,13 +297,13 @@ export default function CollectionReport({ fetchData }) {
               </thead>
               <tbody>
                 {data.map((r, i) => (
-                  <tr key={r.InvoiceNumber || i} style={i % 2 === 1 ? styles.rowAlt : undefined}>
+                  <tr key={r.UnitID || i} style={i % 2 === 1 ? styles.rowAlt : undefined}>
                     {COLUMNS.map((c) => (
                       <td
                         key={c.key}
                         style={{
                           ...styles.td,
-                          textAlign: c.type === "text" || c.type === "date" ? "left" : "right",
+                          textAlign: c.type === "text" ? "left" : "right",
                           fontWeight: c.type === "total" ? 700 : 400,
                           color: c.type === "total" ? "#10243d" : "#1b2733",
                         }}
@@ -326,15 +321,13 @@ export default function CollectionReport({ fetchData }) {
                       key={c.key}
                       style={{
                         ...styles.tfootTd,
-                        textAlign: c.type === "text" || c.type === "date" ? "left" : "right",
+                        textAlign: c.type === "text" ? "left" : "right",
                       }}
                     >
                       {i === 0
                         ? "Totals"
-                        : c.type === "text" || c.type === "date"
-                        ? ""
-                        : c.key === "Total"
-                        ? `${fmt(totals.Total)} ${uom}`
+                        : c.key === "OutstandingAmount"
+                        ? fmt(totals.OutstandingAmount)
                         : fmt(totals[c.key])}
                     </td>
                   ))}
@@ -350,116 +343,113 @@ export default function CollectionReport({ fetchData }) {
 
 /* ------------------------------------------------------------------ */
 /* Inline styles — flat, matching the plain PDF/Excel output          */
-/* ------------------------------------------------------------------ */
+
 const styles = {
-  app: {
-    maxWidth: 1300,
-    margin: "0 auto",
-    padding: "20px 20px 60px",
-    fontFamily: "'Segoe UI', system-ui, -apple-system, sans-serif",
-    color: "#1b2733",
-    background: "#f2f5f8",
-  },
-  toolbar: {
-    padding: "16px 20px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: 16,
-    flexWrap: "wrap",
-  },
-  toolbarTitle: {
-    color: "#10243d",
-    fontSize: 17,
-    fontWeight: 600,
-    margin: 0,
-  },
-  controls: { display: "flex", alignItems: "flex-end", gap: 14, flexWrap: "wrap" },
-  field: { display: "flex", flexDirection: "column", gap: 4 },
-  label: {
-    fontSize: 10.5,
-    color: "#10243d",
-    textTransform: "uppercase",
-    letterSpacing: "0.06em",
-    fontWeight: 600,
-  },
-  input: {
-    background: "#fff",
-    color: "#1b2733",
-    border: "1px solid #35516f",
-    padding: "7px 10px",
-    fontSize: 13,
-    minWidth: 160,
-    outline: "none",
-  },
-  btnPrimary: {
-    border: "1px solid #35516f",
-    padding: "8px 16px",
-    fontSize: 13,
-    fontWeight: 600,
-    cursor: "pointer",
-    background: "#fff",
-    color: "#10243d",
-  },
-  exportBar: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    margin: "16px 0 0",
-    padding: "10px 4px",
-    flexWrap: "wrap",
-    gap: 10,
-  },
-  statusLine: { fontSize: 12, color: "#5b6b7b" },
-  exportActions: { display: "flex", gap: 10 },
-  btnExport: {
-    background: "#fff",
-    border: "1px solid #dde3ea",
-    padding: "8px 14px",
-    fontSize: 12.5,
-    fontWeight: 600,
-    cursor: "pointer",
-  },
+    app: {
+        maxWidth: 900,
+        margin: "0 auto",
+        padding: "20px 20px 60px",
+        fontFamily: "'Segoe UI', system-ui, -apple-system, sans-serif",
+        color: "#1b2733",
+        background: "#f2f5f8",
+    },
+    toolbar: {
+        padding: "16px 20px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: 16,
+        flexWrap: "wrap",
+    },
+    toolbarTitle: {
+        color: "#fff",
+        fontSize: 17,
+        fontWeight: 600,
+        margin: 0,
+    },
+    controls: { display: "flex", alignItems: "flex-end", gap: 14, flexWrap: "wrap" },
+    field: { display: "flex", flexDirection: "column", gap: 4 },
+    label: {
+        fontSize: 10.5,
+        textTransform: "uppercase",
+        letterSpacing: "0.06em",
+        fontWeight: 600,
+    },
+    input: {
+        border: "1px solid #35516f",
+        padding: "7px 10px",
+        fontSize: 13,
+        minWidth: 170,
+        outline: "none",
+    },
+    btnPrimary: {
+        border: "1px solid #35516f",
+        padding: "8px 16px",
+        fontSize: 13,
+        fontWeight: 600,
+        cursor: "pointer",
+    },
+    exportBar: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        margin: "16px 0 0",
+        padding: "10px 4px",
+        flexWrap: "wrap",
+        gap: 10,
+    },
+    statusLine: { fontSize: 12, color: "#5b6b7b" },
+    exportActions: { display: "flex", gap: 10 },
+    btnExport: {
+        background: "#fff",
+        border: "1px solid #dde3ea",
+        padding: "8px 14px",
+        fontSize: 12.5,
+        fontWeight: 600,
+        cursor: "pointer",
+    },
   sheet: {
     background: "#fff",
     marginTop: 14,
     border: "1px solid #dde3ea",
-  },
-  sheetInner: { padding: "34px 38px 28px", overflowX: "auto" },
-  reportTitle: {
-    textAlign: "center",
-    fontSize: 17,
-    fontWeight: 700,
-    color: "#10243d",
-    marginBottom: 18,
-    whiteSpace: "nowrap",
-  },
-  reportMeta: {
-    display: "flex",
-    justifyContent: "space-between",
-    fontSize: 12,
-    color: "#5b6b7b",
-    marginBottom: 16,
-  },
-  table: { width: "100%", borderCollapse: "collapse", fontSize: 12.5 },
-  th: {
+    overflowX: "auto",
+},
+
+sheetInner: { 
+    padding: "24px 20px 28px" 
+},    reportTitle: {
+        textAlign: "center",
+        fontSize: 17,
+        fontWeight: 700,
+        color: "#10243d",
+        marginBottom: 18,
+    },
+    reportMeta: {
+        display: "flex",
+        justifyContent: "space-between",
+        fontSize: 12,
+        color: "#5b6b7b",
+        marginBottom: 16,
+    },
+    table: { width: "100%", borderCollapse: "collapse", fontSize: 12.5 },
+ th: {
     background: "#eaf1fb",
     color: "#10243d",
     fontWeight: 700,
     fontSize: 11.5,
     padding: "9px 10px",
     border: "1px solid #dde3ea",
-    whiteSpace: "nowrap",
-  },
-  td: { padding: "8px 10px", border: "1px solid #dde3ea", whiteSpace: "nowrap" },
-  rowAlt: { background: "#f9fbfd" },
-  tfootTd: {
-    padding: "10px 8px",
-    border: "1px solid #dde3ea",
-    borderTop: "2px solid #10243d",
-    background: "#eaf1fb",
-    fontWeight: 700,
-    color: "#10243d",
-  },
-  empty: { textAlign: "center", padding: "40px 0", color: "#5b6b7b", fontSize: 13 },
+    whiteSpace: "normal",
+},
+    td: { padding: "8px 10px", border: "1px solid #dde3ea" },
+    rowAlt: { background: "#f9fbfd" },
+    tfootTd: {
+        padding: "11px 10px",
+        border: "1px solid #dde3ea",
+        borderTop: "2px solid #10243d",
+        background: "#eaf1fb",
+        fontWeight: 700,
+        color: "#10243d",
+    },
+    empty: { textAlign: "center", padding: "40px 0", color: "#5b6b7b", fontSize: 13 },
 };

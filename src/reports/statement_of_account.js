@@ -8,7 +8,7 @@ const SAMPLE_DATA =  await loadData();
 
 async function loadData() {
   try {
-    const response = await fetch('/dummydata.json'); 
+    const response = await fetch('/data/dummydata.json'); 
     if (!response.ok) throw new Error('Network response was not ok');
     console.log(response[1])
     const data = await response.json()

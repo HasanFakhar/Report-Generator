@@ -7,6 +7,9 @@ const NAV_ITEMS = [
   { id: 'noc', label: 'No Objection Certificate' },
   { id: 'collection', label: 'Collection Report' },
   { id: 'unitwise-billing', label: 'Unit-wise Billing Report' },
+    { id: 'payment-summary', label: 'Unit-wise payment summary Report' },
+
+
 
 ];
 

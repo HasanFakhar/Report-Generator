@@ -6,6 +6,8 @@ import AgingReport from './reports/aging_report';
 import NOCReport from './reports/noc';
 import CollectionReport from './reports/collection_report';
 import UnitWiseBillingReport from './reports/unitwisebilling.js';
+import PaymentSummaryReport from './reports/paymentSummaryReport.js';
+
 
 export default function App() {
   const [activePage, setActivePage] = useState('tax-invoice');
@@ -20,7 +22,7 @@ export default function App() {
         {activePage === 'noc' && <NOCReport />}
         {activePage === 'collection' && <CollectionReport />}
         {activePage === 'unitwise-billing' && <UnitWiseBillingReport />}
-        
+        {activePage === 'payment-summary' && <PaymentSummaryReport />}
 
       </main>
     </div>

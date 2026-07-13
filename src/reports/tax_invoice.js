@@ -755,7 +755,7 @@ export default function TaxInvoiceReport({
 
             let amiriB64 = null;
             try {
-                const fontResp = await fetch('/Amiri Regular.ttf');
+                const fontResp = await fetch('/data/Amiri Regular.ttf');
                 if (!fontResp.ok) throw new Error(`Font fetch failed: ${fontResp.status}`);
                 const fontBuf = await fontResp.arrayBuffer();
                 const bytes = new Uint8Array(fontBuf);

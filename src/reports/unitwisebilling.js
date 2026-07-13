@@ -4,7 +4,7 @@ import Select from "react-select";
 
 async function loadData() {
     try {
-        const response = await fetch('/unitwise_data.json');
+        const response = await fetch('/data/unitwise_data.json');
         if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json()
         return data

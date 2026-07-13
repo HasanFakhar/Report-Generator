@@ -9,7 +9,7 @@ import Select from "react-select";
 
 async function loadData() {
     try {
-        const response = await fetch('/agereport_sample.json');
+        const response = await fetch('/data/agereport_sample.json');
         if (!response.ok) throw new Error('Network response was not ok');
         console.log(response[1])
         const data = await response.json()
