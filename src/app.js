@@ -7,7 +7,8 @@ import NOCReport from './reports/noc';
 import CollectionReport from './reports/collection_report';
 import UnitWiseBillingReport from './reports/unitwisebilling.js';
 import PaymentSummaryReport from './reports/paymentSummaryReport.js';
-import TowerWiseBillingReport from './reports/towerwisebilling.js';
+import TowerWiseBillingReport from './reports/towerwisecollection.js';
+import SecurityDepositTrackerReport from './reports/securityDeposit.js';
 
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
         {activePage === 'unitwise-billing' && <UnitWiseBillingReport />}
         {activePage === 'payment-summary' && <PaymentSummaryReport />}
         {activePage === 'tower-wise-billing' && <TowerWiseBillingReport />}
+        {activePage === 'security-deposit-tracker' && <SecurityDepositTrackerReport />}
 
       </main>
     </div>

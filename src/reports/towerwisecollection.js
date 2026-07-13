@@ -135,7 +135,7 @@ export default function TowerwiseBillingReport({ fetchData }) {
     }, [fetchData, tower, apiFrom, apiTo]);
 
     const handleExportPdf = useCallback(() => {
-        const doc = new jsPDF({ orientation: "landscape", unit: "pt", format: "a3" });
+        const doc = new jsPDF({ orientation: "landscape", unit: "pt", format: "a4" });
         const pageWidth = doc.internal.pageSize.getWidth();
 
         doc.setFontSize(13);

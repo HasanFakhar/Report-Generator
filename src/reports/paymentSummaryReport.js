@@ -1,23 +1,4 @@
-/**
- * PaymentSummaryReport.jsx
- * ------------------------------------------------------------------
- * Drop-in React component for a Payment Summary Report with:
- *   - Tower Name / To Date filters + Generate Report action
- *   - Live HTML preview (flat styling matching the PDF output)
- *   - Export to PDF (jsPDF + jspdf-autotable)
- *   - Export to Excel (SheetJS / xlsx)
- *
- * Install dependencies in your project:
- *   npm install jspdf jspdf-autotable xlsx
- *
- * Usage:
- *   import PaymentSummaryReport from "./PaymentSummaryReport";
- *   <PaymentSummaryReport fetchData={(tower, toDate) => fetch(...).then(r => r.json())} />
- *
- * If no fetchData prop is supplied, the component falls back to the
- * sample payload below so it renders out of the box.
- * ------------------------------------------------------------------
- */
+
 
 import React, { useState, useMemo, useCallback } from "react";
 import jsPDF from "jspdf";
