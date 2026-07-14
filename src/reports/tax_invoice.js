@@ -493,7 +493,8 @@ function drawConsumptionChart(doc, data, x, y, width, height) {
 }
 // ─── Styles ───────────────────────────────────────────────────────────────────
 const S = {
-    page: { boxSizing: "border-box", fontFamily: "Arial, Helvetica, sans-serif", fontSize: "12px", color: "#000", margin: "20px" },
+    page: { maxWidth:900, boxSizing: "border-box", fontFamily: "Arial, Helvetica, sans-serif", fontSize: "12px", color: "#000",margin: "0 auto",
+ },
     toolbar: { display: "flex", justifyContent: "flex-end", gap: "10px", marginBottom: "14px" },
     btn: { display: "flex", alignItems: "center", gap: "6px", padding: "7px 16px", border: "1px solid #444", borderRadius: "4px", background: "#fff", fontSize: "13px", fontFamily: "Arial, Helvetica, sans-serif", cursor: "pointer" },
     report: { border: "1px solid #000", padding: "16px" },

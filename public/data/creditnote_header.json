@@ -1,0 +1,40 @@
+{
+  "data": {
+    "ServiceAgreementKey": "68FBCA5D-DEA7-47CC-BE1A-EB21D5DC5874",
+    "InvoiceDataID": null,
+    "ConsumerID": 260,
+    "ConsumerName": "Donia Ben Ameur",
+    "UnitNo": "216",
+    "UnitName": "216",
+    "UnitArea": "463.93",
+    "UnitAreaUOM": "m²",
+    "EstateKey": "9365EEFC-9A36-4715-8294-DCB91C5E8838",
+    "BuildingName": "BURJ VIEW RESIDENCES",
+    "InvoiceNumber": null,
+    "MeterNo": "67397385",
+    "AccountNumber": "BVA216T1",
+    "BillingDate": "Apr 30 2026 12:00AM",
+    "DueDate": null,
+    "BillingPeriod": null,
+    "CreditNoteBillingPeriod": "01/04/2026 - 30/04/2026",
+    "DownloadReportName": null,
+    "MoveInDate": "2025-12-01T05:30:00",
+    "InvoiceTypeKey": null,
+    "InvoiceTypeName": null,
+    "OperatingCompanyAddress": "LYNX District Cooling Services\nDubai Stadium point- Unit 312, Dubai, UAE",
+    "ContactNumber": "Call: +971 45762953",
+    "WhatsAppNumber": "Whatsapp: +971 585536949"
+  },
+  "labels": {
+    "DueDate": "Due Date:\nتاريخ الاستحقاق",
+    "Name": "Name:\nالاسم",
+    "UnitNo": "Unit No.:\nرقم الوحدة",
+    "BillingPeriod": "Billing Period:\nفترة الفوترة",
+    "AccountNumber": "Account Number:\nرقم الحساب",
+    "TaxInvoice": "TAX INVOICE\nفاتورة ضريبية",
+    "BillingDate": "Billing Date:\nتاريخ الفاتورة",
+    "InvoiceNumber": "Invoice Number:\nرقم الفاتورة",
+    "CooledSpaceArea": "Cooled Space Area (m²):\nمساحة التبريد (متر مربع)",
+    "TowerName": "Tower Name:\nاسم البرج"
+  }
+}
