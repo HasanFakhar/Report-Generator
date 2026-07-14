@@ -12,6 +12,8 @@ const NAV_ITEMS = [
   { id: 'tower-wise-collection', label: 'Tower-wise Collection Report' },
     { id: 'security-deposit-tracker', label: 'Security Deposit Tracker Report' },
         { id: 'Credit-Note', label: 'Credit Note Report' },
+                { id: 'Payment-Receipt', label: 'Payment Receipt Report' },
+
 
 
 

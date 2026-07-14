@@ -10,6 +10,7 @@ import PaymentSummaryReport from './reports/paymentSummaryReport.js';
 import TowerWiseBillingReport from './reports/towerwisecollection.js';
 import SecurityDepositTrackerReport from './reports/securityDeposit.js';
 import CreditNoteReport from './reports/credit_note.js';
+import PaymentReceiptReport from './reports/payment_receipt.js';
 
 
 export default function App() {
@@ -29,6 +30,8 @@ export default function App() {
         {activePage === 'tower-wise-collection' && <TowerWiseBillingReport />}
         {activePage === 'security-deposit-tracker' && <SecurityDepositTrackerReport />}
         {activePage === 'Credit-Note' && <CreditNoteReport />}
+        {activePage === 'Payment-Receipt' && <PaymentReceiptReport />}
+
 
       </main>
     </div>

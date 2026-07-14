@@ -1,0 +1,18 @@
+[
+  {
+    "CollectionKey": "5849EAD1-C3D1-4DD6-BD83-760023495A4B",
+    "ServiceAgreementKey": "DE15C8CE-C6D6-4816-959C-55033A54D983",
+    "AccountNumber": "RR1111T4",
+    "ConsumerName": "MUHAMMAD MUGHEES MUHAMMAD NAWAZ",
+    "CollectionAmount": 812.45,
+    "CollectionDate": "2026-07-09T08:08:24",
+    "ReferenceNumber": "56474596-29a4-40f9-a894-e09de73bb611",
+    "PaymentTypeKey": "9C5C6B53-F7EC-4503-8C82-BD85F454AEFF",
+    "PaymentName": "Debit Card",
+    "EstateKey": "3BD40B66-A479-4D2A-950D-833336D0E30D",
+    "EstateName": "ROYAL RESIDENCE 1",
+    "UnitNumber": 111,
+    "UserName": "np",
+    "Status": "14/07/2026"
+  }
+]
