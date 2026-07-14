@@ -25,7 +25,7 @@ export default function App() {
         {activePage === 'collection' && <CollectionReport />}
         {activePage === 'unitwise-billing' && <UnitWiseBillingReport />}
         {activePage === 'payment-summary' && <PaymentSummaryReport />}
-        {activePage === 'tower-wise-billing' && <TowerWiseBillingReport />}
+        {activePage === 'tower-wise-collection' && <TowerWiseBillingReport />}
         {activePage === 'security-deposit-tracker' && <SecurityDepositTrackerReport />}
 
       </main>

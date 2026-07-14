@@ -9,7 +9,9 @@ const NAV_ITEMS = [
   { id: 'unitwise-billing', label: 'Unit-wise Billing Report' },
   { id: 'payment-summary', label: 'Unit-wise payment summary Report' },
 
-  { id: 'security-deposit-tracker', label: 'Security Deposit Tracker Report' },
+  { id: 'tower-wise-collection', label: 'Tower-wise Collection Report' },
+    { id: 'security-deposit-tracker', label: 'Security Deposit Tracker Report' },
+
 
 
 
