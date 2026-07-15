@@ -1,0 +1,495 @@
+import React, { useState, useMemo, useCallback, useRef } from "react";
+import * as XLSX from "xlsx";
+import Select from "react-select";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
+import html2canvas from "html2canvas";
+import {
+    BarChart,
+    Bar,
+    Cell,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    ResponsiveContainer,
+    LabelList,
+} from "recharts";
+
+async function loadData() {
+    try {
+        const response = await fetch('/data/tower_energy.json');
+        if (!response.ok) throw new Error('Network response was not ok');
+        const data = await response.json();
+        return Array.isArray(data) ? data[0] : data;
+    } catch (error) {
+        console.error('Error reading JSON:', error);
+        return null;
+    }
+}
+
+const SAMPLE_DATA = await loadData();
+
+const TOWERS = {
+    "ROYAL RESIDENCE 1 key ": "ROYAL RESIDENCE 1",
+    "ROYAL RESIDENCE 2 key ": "ROYAL RESIDENCE 2",
+    "ROYAL RESIDENCE 3 key": "ROYAL RESIDENCE 3"
+};
+
+/* ------------------------------------------------------------------ */
+/* Helpers                                                             */
+/* ------------------------------------------------------------------ */
+const fmt = (n) =>
+    (Number(n) || 0).toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    });
+
+const fmtTariff = (n) => (Number(n) || 0).toFixed(4);
+
+function buildSections(data) {
+    if (!data) return { current: [], previous: [], chart: [] };
+
+    const current = [
+        { label: "Current Billing Date", value: data.CurrentBillingDate || "—" },
+        { label: "Consumption for Month of", value: data.CurrentComsumptionMonth || "—" },
+        { label: "Total Billed Amount (AED)", value: fmt(data.TotalBilledAmount) },
+        { label: "Total Units", value: fmt(data.TotalUnits) },
+        { label: "Vacant Units", value: fmt(data.VacantUnits) },
+        { label: "Total Billable Units", value: fmt(data.TotalBillableUnits) },
+        { label: "Billed Units", value: fmt(data.BilledUnits) },
+        { label: "UnBilled Units", value: fmt(data.UnBilledUnits) },
+        { label: "Tariff Rate", value: fmtTariff(data.TariffRate) },
+    ];
+
+    const previous = [
+        { label: "Previous  Billing Period", value: data.PreviouseBillingPeriod || "—" },
+        { label: "Consumption for Month of", value: data.PrevComsumptionMonth || "—" },
+        { label: "Billed Amount (AED)", value: fmt(data.PrevBilledAmount) },
+        { label: "Billed/Uncollected new Reg (AED)", value: fmt(data.BilledUncollectedNeweg) },
+        { label: "Total Billed Amount (AED)", value: fmt(data.TotalPrevBilledAmount) },
+        { label: "Collection for the month of", value: data.CollectionForTheMonth || "—" },
+        { label: "Collection Period", value: data.CollectionPeriod || "—" },
+        { label: "A. Current Month Collection (AED)", value: fmt(data.CurrentMonthCollection) },
+        { label: "B. Previous O/S Payment Collected (AED)", value: fmt(data.PrevOSPayment) },
+        { label: "Total Collection (AED)", value: fmt(data.TotalCollection), bold: true },
+    ];
+
+    const chart = [
+        { name: "Bill Amount", value: Number(data.PrevBilledAmount) || 0, fill: "#4a89dc" },
+        { name: "Collection", value: Number(data.CurrentMonthCollection) || 0, fill: "#a94442" },
+    ];
+
+    return { current, previous, chart };
+}
+
+export default function TowerEnergyReport({ fetchData }) {
+    const [estate, setEstate] = useState(Object.keys(TOWERS)[0]);
+    const [billMonth, setBillMonth] = useState(() => {
+        const d = new Date();
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+    });
+    const [data, setData] = useState(SAMPLE_DATA);
+    const [loading, setLoading] = useState(false);
+    const [exportingPdf, setExportingPdf] = useState(false);
+    const chartRef = useRef(null);
+
+    const { current, previous, chart } = useMemo(() => buildSections(data), [data]);
+
+    const generatedBy = data?.GeneratedBy || "—";
+    const generatedOn = data?.GeneratedOn || "—";
+    const towerLabel = TOWERS[estate];
+
+    const handleGenerate = useCallback(async () => {
+        if (!fetchData) {
+            setData(SAMPLE_DATA);
+            return;
+        }
+        setLoading(true);
+        try {
+            const result = await fetchData(estate, billMonth);
+            setData(Array.isArray(result) ? result[0] : result);
+        } catch (err) {
+            console.error("Failed to load tower energy report:", err);
+        } finally {
+            setLoading(false);
+        }
+    }, [fetchData, estate, billMonth]);
+
+    // const handleExportXlsx = useCallback(() => {
+    //     const aoa = [
+    //         [`${towerLabel} Monthly Billing & Collection Report`],
+    //         [],
+    //         [`Generated On: ${generatedOn}`],
+    //         [`Generated By: ${generatedBy}`],
+    //         [],
+    //         ["CURRENT BILLING INFORMATION"],
+    //         ...current.map((r) => [r.label, r.value]),
+    //         [],
+    //         ["PREVIOUS BILLING AND COLLECTION INFORMATION"],
+    //         ...previous.map((r) => [r.label, r.value]),
+    //         [],
+    //         ["Bill Amount", chart[0]?.value ?? 0],
+    //         ["Collection", chart[1]?.value ?? 0],
+    //     ];
+
+    //     const ws = XLSX.utils.aoa_to_sheet(aoa);
+    //     ws["!cols"] = [{ wch: 40 }, { wch: 20 }];
+    //     ws["!merges"] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 1 } }];
+
+    //     const wb = XLSX.utils.book_new();
+    //     XLSX.utils.book_append_sheet(wb, ws, "Tower Energy Report");
+    //     XLSX.writeFile(wb, `TowerEnergyReport_${towerLabel.replace(/\s+/g, "_")}_${generatedOn.replace(/\//g, "-")}.xlsx`);
+    // }, [current, previous, chart, towerLabel, generatedBy, generatedOn]);
+
+    const handleExportPdf = useCallback(async () => {
+        setExportingPdf(true);
+        try {
+            const doc = new jsPDF({ orientation: "portrait", unit: "pt", format: "a4" });
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const pageHeight = doc.internal.pageSize.getHeight();
+
+            doc.setFontSize(13);
+            doc.setFont(undefined, "bold");
+            doc.setTextColor(16, 36, 61);
+            doc.text(`${towerLabel} Monthly Billing & Collection Report`, pageWidth / 2, 40, { align: "center" });
+
+            doc.setFontSize(9);
+            doc.setFont(undefined, "normal");
+            doc.setTextColor(90, 105, 120);
+            doc.text(`Generated On : ${generatedOn}`, 40, 62);
+            doc.text(`Generated By : ${generatedBy}`, 40, 76);
+
+            doc.setFillColor(226, 229, 232);
+            doc.rect(40, 88, pageWidth - 80, 18, "F");
+            doc.setFontSize(9);
+            doc.setFont(undefined, "bold");
+            doc.setTextColor(16, 36, 61);
+            doc.text("CURRENT BILLING INFORMATION", pageWidth / 2, 100, { align: "center" });
+
+            autoTable(doc, {
+                body: current.map((r) => [r.label, r.value]),
+                startY: 114,
+                theme: "plain",
+                styles: { fontSize: 9, cellPadding: 4 },
+                columnStyles: { 0: { cellWidth: 260 }, 1: { halign: "left", cellWidth: 160 } },
+            });
+
+            const midY = doc.lastAutoTable.finalY + 14;
+            doc.setFillColor(226, 229, 232);
+            doc.rect(40, midY, pageWidth - 80, 18, "F");
+            doc.setFont(undefined, "bold");
+            doc.text("PREVIOUS BILLING AND COLLECTION INFORMATION", pageWidth / 2, midY + 12, { align: "center" });
+
+            autoTable(doc, {
+                body: previous.map((r) => [r.label, r.value]),
+                startY: midY + 26,
+                theme: "plain",
+                styles: { fontSize: 9, cellPadding: 4 },
+                columnStyles: { 0: { cellWidth: 140 }, 1: { halign: "left", cellWidth: 140 } },
+            });
+
+            let chartImgData = null;
+            let chartAspect = 0.55;
+            if (chartRef.current) {
+                try {
+                    const canvas = await html2canvas(chartRef.current, {
+                        backgroundColor: "#ffffff",
+                        scale: 2,
+                    });
+                    chartImgData = canvas.toDataURL("image/png");
+                    chartAspect = canvas.height / canvas.width;
+                } catch (err) {
+                    console.error("Failed to capture chart image:", err);
+                }
+            }
+
+            if (chartImgData) {
+                const imgWidth = 260;
+                const imgHeight = imgWidth * chartAspect;
+                // let y = doc.lastAutoTable.finalY + 16;
+                let y = midY + 26;
+
+                if (y + imgHeight > pageHeight - 40) {
+                    doc.addPage();
+                    y = 40;
+                }
+
+                doc.setFontSize(8.5);
+                doc.setFont(undefined, "bold");
+                doc.setTextColor(16, 36, 61);
+                // doc.text("Bill Amount vs Collection", 40, y);
+
+                doc.addImage(chartImgData, "PNG", 320, y + 20, imgWidth, imgHeight);
+            }
+
+            doc.save(`TowerEnergyReport_${towerLabel.replace(/\s+/g, "_")}_${generatedOn.replace(/\//g, "-")}.pdf`);
+        } finally {
+            setExportingPdf(false);
+        }
+    }, [current, previous, towerLabel, generatedBy, generatedOn]);
+
+    return (
+        <div style={styles.app}>
+            {/* Toolbar */}
+            <div style={styles.toolbar}>
+                <h2 style={styles.toolbarTitle}>Tower Wise Energy Report</h2>
+                <button style={styles.btnPrimary} onClick={handleGenerate} disabled={loading}>
+                    {loading ? "Loading…" : "📄 Generate Report"}
+                </button>
+            </div>
+
+            {/* Filters */}
+            <div style={styles.filterBar}>
+                <div style={styles.field}>
+                    <label style={styles.label}>Tower Name</label>
+                    <Select
+                        value={{ label: towerLabel, value: estate }}
+                        onChange={(selected) => setEstate(selected.value)}
+                        options={Object.keys(TOWERS).map((t) => ({ label: TOWERS[t], value: t }))}
+                        isSearchable={true}
+                        styles={{
+                            control: (base) => ({ ...base, ...styles.input, minHeight: "38px", width: "280px" }),
+                            menu: (base) => ({ ...base, zIndex: 9999 }),
+                        }}
+                    />
+                </div>
+                <div style={styles.field}>
+                    <label style={styles.label}>Bill Month</label>
+                    <input
+                        type="month"
+                        value={billMonth}
+                        onChange={(e) => setBillMonth(e.target.value)}
+                        style={{ ...styles.input, width: "220px" }}
+                    />
+                </div>
+            </div>
+
+            {/* Export bar */}
+            <div style={styles.exportBar}>
+                <div style={styles.statusLine}>
+                    {data ? `Showing ${towerLabel} report` : "No report generated yet"}
+                </div>
+                <div style={styles.exportActions}>
+                    {/* <button style={styles.btnExport} onClick={handleExportXlsx} disabled={!data}>
+                        Export Excel
+                    </button> */}
+                    <button style={styles.btnExport} onClick={handleExportPdf} disabled={!data || exportingPdf}>
+                        {exportingPdf ? "Preparing PDF…" : "Export PDF"}
+                    </button>
+                </div>
+            </div>
+
+            {/* Report sheet */}
+            <div style={styles.sheet}>
+                <div style={styles.sheetInner}>
+                    {!data ? (
+                        <div style={styles.empty}>No report data available. Click Generate Report.</div>
+                    ) : (
+                        <>
+                            <div style={styles.reportTitle}>
+                                {`${towerLabel} Monthly Billing & Collection Report`}
+                            </div>
+
+                            <div style={styles.reportMeta}>
+                                <div>
+                                    Generated On&nbsp;:&nbsp;<b>{generatedOn}</b>
+                                </div>
+                                <div>
+                                    Generated By&nbsp;:&nbsp;<b>{generatedBy}</b>
+                                </div>
+                            </div>
+
+                            {/* Current billing information */}
+                            <div style={styles.sectionHeader}>CURRENT BILLING INFORMATION</div>
+                            <div style={styles.infoList}>
+                                {current.map((row) => (
+                                    <div key={row.label} style={styles.infoRow}>
+                                        <span style={styles.infoLabel}>{row.label}</span>
+                                        <span style={styles.infoValue}>{row.value}</span>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Previous billing & collection information + chart */}
+                            <div style={styles.sectionHeader}>PREVIOUS BILLING AND COLLECTION INFORMATION</div>
+                            <div style={styles.previousRow}>
+                                <div style={{ ...styles.infoList, flex: "1.4 1 0" }}>
+                                    {previous.map((row) => (
+                                        <div key={row.label} style={styles.infoRow}>
+                                            <span style={styles.infoLabel}>{row.label}</span>
+                                            <span
+                                                style={{
+                                                    ...styles.infoValue,
+                                                    fontWeight: row.bold ? 700 : 400,
+                                                }}
+                                            >
+                                                {row.value}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div style={styles.chartBox} ref={chartRef}>
+                                    <ResponsiveContainer width="100%" height={200}>
+                                        <BarChart data={chart} margin={{ top: 24, right: 10, left: 0, bottom: 0 }}>
+                                            <CartesianGrid strokeDasharray="3 3" stroke="#e6e9ec" />
+                                            <XAxis
+                                                dataKey="name"
+                                                tick={{ fontSize: 10, fill: "#5b6b7b" }}
+                                                axisLine={{ stroke: "#dde3ea" }}
+                                            />
+                                            <YAxis
+                                                tick={{ fontSize: 9, fill: "#5b6b7b" }}
+                                                axisLine={{ stroke: "#dde3ea" }}
+                                                tickFormatter={(v) => v.toLocaleString()}
+                                            />
+                                            <Tooltip formatter={(v) => fmt(v)} />
+                                            <Bar dataKey="value" radius={[2, 2, 0, 0]} barSize={46}>
+                                                {chart.map((entry, i) => (
+                                                    <Cell key={`cell-${i}`} fill={entry.fill} />
+                                                ))}
+                                                <LabelList
+                                                    dataKey="value"
+                                                    position="top"
+                                                    formatter={(v) => fmt(v)}
+                                                    style={{ fontSize: 9, fill: "#1b2733" }}
+                                                />
+                                            </Bar>
+                                        </BarChart>
+                                    </ResponsiveContainer>
+                                </div>
+                            </div>
+                        </>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+}
+
+/* ------------------------------------------------------------------ */
+/* Inline styles                                                       */
+/* ------------------------------------------------------------------ */
+const styles = {
+    app: {
+        maxWidth: 900,
+        margin: "0 auto",
+        padding: "20px 20px 60px",
+        fontFamily: "'Segoe UI', system-ui, -apple-system, sans-serif",
+        color: "#1b2733",
+        background: "#f2f5f8",
+    },
+    toolbar: {
+        padding: "14px 20px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: 16,
+        flexWrap: "wrap",
+        background: "#fff",
+        border: "1px solid #dde3ea",
+    },
+    toolbarTitle: { color: "#10243d", fontSize: 16, fontWeight: 700, margin: 0 },
+    btnPrimary: {
+        border: "none",
+        borderRadius: 4,
+        padding: "9px 18px",
+        fontSize: 13,
+        fontWeight: 600,
+        cursor: "pointer",
+        background: "#2f6fed",
+        color: "#fff",
+    },
+    filterBar: {
+        display: "flex",
+        gap: 24,
+        alignItems: "flex-end",
+        background: "#fff",
+        border: "1px solid #dde3ea",
+        borderTop: "none",
+        padding: "14px 20px",
+        flexWrap: "wrap",
+    },
+    field: { display: "flex", flexDirection: "column", gap: 4 },
+    label: {
+        fontSize: 10.5,
+        color: "#5b6b7b",
+        textTransform: "uppercase",
+        letterSpacing: "0.06em",
+        fontWeight: 600,
+    },
+    input: {
+        background: "#fff",
+        color: "#1b2733",
+        border: "1px solid #c7d0da",
+        padding: "7px 10px",
+        fontSize: 13,
+        outline: "none",
+    },
+    exportBar: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        margin: "14px 0 0",
+        padding: "8px 4px",
+        flexWrap: "wrap",
+        gap: 10,
+    },
+    statusLine: { fontSize: 12, color: "#5b6b7b" },
+    exportActions: { display: "flex", gap: 10 },
+    btnExport: {
+        background: "#fff",
+        border: "1px solid #dde3ea",
+        padding: "8px 14px",
+        fontSize: 12.5,
+        fontWeight: 600,
+        cursor: "pointer",
+    },
+    sheet: { background: "#fff", marginTop: 14, border: "1px solid #dde3ea" },
+    sheetInner: { padding: "34px 38px 40px" },
+    reportTitle: {
+        textAlign: "center",
+        fontSize: 15.5,
+        fontWeight: 700,
+        color: "#10243d",
+        marginBottom: 20,
+    },
+    reportMeta: {
+        display: "flex",
+        flexDirection: "column",
+        gap: 4,
+        fontSize: 12,
+        color: "#1b2733",
+        marginBottom: 18,
+    },
+    sectionHeader: {
+        background: "#e2e5e8",
+        color: "#10243d",
+        fontWeight: 700,
+        fontSize: 11.5,
+        textAlign: "center",
+        padding: "8px 0",
+        margin: "18px 0 12px",
+        letterSpacing: "0.02em",
+    },
+    infoList: { display: "flex", flexDirection: "column", maxWidth: 520 },
+    infoRow: {
+        display: "flex",
+        justifyContent: "space-between",
+        gap: 24,
+        padding: "5px 0",
+        fontSize: 12.5,
+        borderBottom: "1px solid #f0f2f4",
+    },
+    infoLabel: { color: "#3d4b58" },
+    infoValue: { color: "#1b2733", minWidth: 110, textAlign: "right" },
+    previousRow: { display: "flex", gap: 24, alignItems: "flex-start", flexWrap: "wrap" },
+    chartBox: {
+        flex: "1 1 0",
+        minWidth: 260,
+        border: "1px solid #eef1f4",
+        padding: "10px 10px 4px",
+    },
+    empty: { textAlign: "center", padding: "60px 0", color: "#5b6b7b", fontSize: 13 },
+};

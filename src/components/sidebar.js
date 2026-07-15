@@ -14,6 +14,8 @@ const NAV_ITEMS = [
   { id: 'Credit-Note', label: 'Credit Note Report' },
   { id: 'Payment-Receipt', label: 'Payment Receipt Report' },
 { id: 'Statement-detailed', label: 'Statement of Account Detailed Report' },
+{ id: 'Tower-Energy', label: 'TowerWise Energy Report' },
+
 
 
 
