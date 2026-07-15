@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Select from "react-select";
 import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
@@ -49,7 +49,7 @@ const S = {
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function PaymentReceipt({ data = SAMPLE_DATA }) {
-    const receipt = (Array.isArray(data) ? data[0] : data) || {};
+    const receipt = useMemo(() => (Array.isArray(data) ? data[0] : data) || {}, [data]);
     const [status, setStatus] = useState("");
     const [loadingPDF, setLoadingPDF] = useState(false);
     const [loadingExcel, setLoadingExcel] = useState(false);
