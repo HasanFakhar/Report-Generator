@@ -128,7 +128,7 @@ const S = {
 
 async function loadData() {
   try {
-    const response = await fetch("/dummylist.json");
+    const response = await fetch("data/dummylist.json");
     if (!response.ok) throw new Error("Network response was not ok");
     const data = await response.json();
     return data;

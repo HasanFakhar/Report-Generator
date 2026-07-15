@@ -11,6 +11,7 @@ import TowerWiseBillingReport from './reports/towerwisecollection.js';
 import SecurityDepositTrackerReport from './reports/securityDeposit.js';
 import CreditNoteReport from './reports/credit_note.js';
 import PaymentReceiptReport from './reports/payment_receipt.js';
+import StatementOfAccountDetailed from './reports/statement_of_account_detailed.js';
 
 
 export default function App() {
@@ -31,6 +32,7 @@ export default function App() {
         {activePage === 'security-deposit-tracker' && <SecurityDepositTrackerReport />}
         {activePage === 'Credit-Note' && <CreditNoteReport />}
         {activePage === 'Payment-Receipt' && <PaymentReceiptReport />}
+        {activePage === 'Statement-detailed' && <StatementOfAccountDetailed />}
 
 
       </main>

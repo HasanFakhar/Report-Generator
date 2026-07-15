@@ -41,11 +41,12 @@ function formatAmount(value) {
 
 const S = {
   page: {
+    maxWidth: 900,
     boxSizing: "border-box",
     fontFamily: "Arial, Helvetica, sans-serif",
     fontSize: "13px",
     color: "#222",
-    margin: "30px",
+    margin: "0px auto",
   },
   toolbar: {
     display: "flex",

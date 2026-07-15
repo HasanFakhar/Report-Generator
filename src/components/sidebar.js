@@ -10,9 +10,11 @@ const NAV_ITEMS = [
   { id: 'payment-summary', label: 'Unit-wise payment summary Report' },
 
   { id: 'tower-wise-collection', label: 'Tower-wise Collection Report' },
-    { id: 'security-deposit-tracker', label: 'Security Deposit Tracker Report' },
-        { id: 'Credit-Note', label: 'Credit Note Report' },
-                { id: 'Payment-Receipt', label: 'Payment Receipt Report' },
+   { id: 'security-deposit-tracker', label: 'Security Deposit Tracker Report' },
+  { id: 'Credit-Note', label: 'Credit Note Report' },
+  { id: 'Payment-Receipt', label: 'Payment Receipt Report' },
+{ id: 'Statement-detailed', label: 'Statement of Account Detailed Report' },
+
 
 
 
