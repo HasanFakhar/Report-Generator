@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Select from "react-select";
 import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
@@ -98,14 +99,51 @@ export default function CreditNoteReport({
     const [status, setStatus] = useState("");
     const [loadingPDF, setLoadingPDF] = useState(false);
     const [loadingExcel, setLoadingExcel] = useState(false);
+    const [agreements, setAgreements] = useState([]);
+    const [selectedAgreement, setSelectedAgreement] = useState(null);
     const logoUrl = '/output.png';
 
-    const h = { ...DEFAULT_HEADER, ...header };
+    useEffect(() => {
+        let isMounted = true;
+        loadData('/data/dummylist.json').then((result) => {
+            if (!isMounted) return;
+            const options = Array.isArray(result)
+                ? result.map((item) => ({
+                    value: item.serviceAgreementKey,
+                    label: `${item.serviceAgreementNumber}${item.consumerName ? ` — ${item.consumerName}` : ""}`,
+                    meta: item,
+                }))
+                : [];
+            setAgreements(options);
+            if (options.length > 0) {
+                setSelectedAgreement((prev) => {
+                    if (prev && options.some((option) => option.value === prev.value)) {
+                        return prev;
+                    }
+                    return options[0];
+                });
+            }
+        }).catch(() => {
+            if (isMounted) setAgreements([]);
+        });
+
+        return () => {
+            isMounted = false;
+        };
+    }, []);
+
+    const selectedAgreementMeta = selectedAgreement?.meta || null;
+    const h = {
+        ...DEFAULT_HEADER,
+        ...header,
+        ConsumerName: selectedAgreementMeta?.consumerName || header?.ConsumerName || DEFAULT_HEADER.ConsumerName,
+        UnitNo: selectedAgreementMeta?.unitName || header?.UnitNo || DEFAULT_HEADER.UnitNo,
+        BuildingName: selectedAgreementMeta?.serviceName || header?.BuildingName || DEFAULT_HEADER.BuildingName,
+        AccountNumber: selectedAgreementMeta?.serviceAgreementNumber || header?.AccountNumber || DEFAULT_HEADER.AccountNumber,
+    };
     const details = Array.isArray(data) ? data : [];
     const sumTotal = details.reduce((s, r) => s + (Number(getLineAmount(r)) || 0), 0);
 
-    // Invoice Number / Billing Date also ride along on each detail line
-    // (InvoiceNUmber / BillDate) — use those if the header block doesn't have them.
     const firstLine = details[0] || {};
     const invoiceNumber = h.InvoiceNumber || firstLine.InvoiceNUmber || firstLine.InvoiceNumber || "";
     const billingDate = h.BillingDate || firstLine.BillDate || "";
@@ -253,6 +291,20 @@ export default function CreditNoteReport({
     return (
         <div style={S.page}>
             <div style={S.toolbar}>
+                <div style={{ minWidth: 320, flex: 1 }}>
+                    <Select
+                        value={selectedAgreement}
+                        onChange={setSelectedAgreement}
+                        options={agreements}
+                        placeholder="Select service agreement..."
+                        isClearable
+                        isSearchable
+                        styles={{
+                            control: (base) => ({ ...base, minHeight: 36, borderColor: "#444", boxShadow: "none", '&:hover': { borderColor: "#222" } }),
+                            menu: (base) => ({ ...base, zIndex: 9999 }),
+                        }}
+                    />
+                </div>
                 <button style={S.btn} onClick={exportExcel} disabled={loadingExcel}>⬇ {loadingExcel ? "Exporting…" : "Export Excel"}</button>
                 <button style={S.btn} onClick={exportPDF} disabled={loadingPDF}>⬇ {loadingPDF ? "Exporting…" : "Export PDF"}</button>
             </div>

@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Select from "react-select";
 import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
-async function loadData() {
+async function loadData(path) {
     try {
         const response = await fetch('/data/paymentreceipt.json');
         if (!response.ok) throw new Error('Network response was not ok');
@@ -52,15 +53,56 @@ export default function PaymentReceipt({ data = SAMPLE_DATA }) {
     const [status, setStatus] = useState("");
     const [loadingPDF, setLoadingPDF] = useState(false);
     const [loadingExcel, setLoadingExcel] = useState(false);
+    const [agreements, setAgreements] = useState([]);
+    const [selectedAgreement, setSelectedAgreement] = useState(null);
 
-    const referenceNo = receipt.ReferenceNumber || "";
-    const date = fmtDate(receipt.CollectionDate);
-    const consumerName = receipt.ConsumerName || "";
-    const towerName = receipt.EstateName || "";
-    const unitNo = receipt.UnitNumber ?? "";
-    const accountNo = receipt.AccountNumber || "";
-    const amount = fmtMoney(receipt.CollectionAmount);
-    const paymentType = receipt.PaymentName || "";
+    const [displayReceipt, setDisplayReceipt] = useState(receipt);
+
+    useEffect(() => {
+        let isMounted = true;
+        loadData().then((result) => {
+            if (!isMounted) return;
+            const options = Array.isArray(result)
+                ? result.map((item) => ({
+                    value: item.ServiceAgreementKey || item.serviceAgreementKey,
+                    label: `${item.EstateName}${item.ConsumerName ? ` — ${item.ConsumerName}` : ""}`,
+                    meta: item,
+                }))
+                : [];
+            setAgreements(options);
+            if (options.length > 0) {
+                setSelectedAgreement((prev) => {
+                    if (prev && options.some((option) => option.value === prev.value)) {
+                        return prev;
+                    }
+                    return options[0];
+                });
+            }
+        }).catch(() => {
+            if (isMounted) setAgreements([]);
+        });
+
+        return () => {
+            isMounted = false;
+        };
+    }, []);
+
+    useEffect(() => {
+        if (selectedAgreement?.meta) {
+            setDisplayReceipt(selectedAgreement.meta);
+        } else {
+            setDisplayReceipt(receipt);
+        }
+    }, [selectedAgreement, receipt]);
+
+    const referenceNo = displayReceipt.ReferenceNumber || displayReceipt.referenceNumber || "";
+    const date = fmtDate(displayReceipt.CollectionDate || displayReceipt.collectionDate);
+    const consumerName = displayReceipt.ConsumerName || displayReceipt.consumerName || "";
+    const towerName = displayReceipt.EstateName || displayReceipt.estateName || "";
+    const unitNo = displayReceipt.UnitNumber ?? displayReceipt.unitNumber ?? "";
+    const accountNo = displayReceipt.AccountNumber || displayReceipt.accountNumber || "";
+    const amount = fmtMoney(displayReceipt.CollectionAmount ?? displayReceipt.collectionAmount);
+    const paymentType = displayReceipt.PaymentName || displayReceipt.paymentName || "";
     const logoUrl = '/output.png';
 
     // ── Excel Export ──────────────────────────────────────────────────────────────
@@ -188,6 +230,20 @@ export default function PaymentReceipt({ data = SAMPLE_DATA }) {
     return (
         <div style={S.page}>
             <div style={S.toolbar}>
+                <div style={{ minWidth: 320, flex: 1 }}>
+                    <Select
+                        value={selectedAgreement}
+                        onChange={setSelectedAgreement}
+                        options={agreements}
+                        placeholder="Select service agreement..."
+                        isClearable
+                        isSearchable
+                        styles={{
+                            control: (base) => ({ ...base, minHeight: 36, borderColor: "#444", boxShadow: "none", '&:hover': { borderColor: "#222" } }),
+                            menu: (base) => ({ ...base, zIndex: 9999 }),
+                        }}
+                    />
+                </div>
                 <button style={S.btn} onClick={exportExcel} disabled={loadingExcel}>⬇ {loadingExcel ? "Exporting…" : "Export Excel"}</button>
                 <button style={S.btn} onClick={exportPDF} disabled={loadingPDF}>⬇ {loadingPDF ? "Exporting…" : "Export PDF"}</button>
             </div>
